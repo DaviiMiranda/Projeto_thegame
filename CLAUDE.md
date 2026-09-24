@@ -64,3 +64,4 @@ Em `.claude/agents/`:
 | `revisor` | revisar uma branch ou PR antes de pedir revisão humana: regras do `CONTRIBUTING.md`, bugs, cenas misturadas, arquivos que não deviam estar no commit |
 | `roteirista` | escrever e revisar história, diálogos e textos, checando consistência com o que já foi decidido |
 | `sistemas` | grafos, IA dos Insones, algoritmos — e explicar a matemática para a apresentação da disciplina |
+| `artista` | guia de estilo, shaders, iluminação 2D, placeholders e listas de assets por sala; conferir se a arte conta o que o roteiro pede |
