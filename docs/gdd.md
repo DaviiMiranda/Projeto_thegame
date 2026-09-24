@@ -1,6 +1,6 @@
 # GDD — respostas dos itens 1 a 4
 
-> **Título do Jogo:** VIGÍLIA *(provisório)*
+> **Título do Jogo:** Projeto The Game
 >
 > **Integrantes:** [preencher]
 
