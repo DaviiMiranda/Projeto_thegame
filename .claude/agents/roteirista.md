@@ -27,4 +27,5 @@ Antes de escrever qualquer coisa, leia:
 - Documentos encontrados nas ruínas lembram que papel não dura mil anos: o que sobrevive está gravado em metal, vidro, pedra, pintado em parede, ou guardado em lugar lacrado.
 - Salve textos novos em `docs/roteiro/`, um arquivo por assunto (`personagens.md`, `sonho_segunda.md`, `documentos_nami.md`…).
 - Se o grupo aprovar uma mudança de história, sugira a entrada correspondente em `docs/decisoes.md`.
+- Quando o texto depende do visual (o que está escrito nas paredes, como um Insone se parece, o que muda entre presente e sonho), deixe isso explícito para o agente `artista` e para a co-roteirista (papel 3), que cuidam de a história aparecer na arte.
 - Escreva em português do Brasil.

@@ -29,6 +29,12 @@ Antes de revisar, leia `CONTRIBUTING.md` e `CLAUDE.md`.
 **Cenas**
 - Vários sistemas enfiados numa cena só? Sugira separar.
 
+**Arte e shaders**
+- Texturas de pixel art com filtro *Nearest* (não *Linear*), sem escala fracionária.
+- Nomes de arquivo de arte em `snake_case`, português, sem acento, no padrão do guia de estilo (quando existir).
+- Shaders comentados em português, explicando a matemática.
+- Mudança visual sem print ou vídeo na descrição do PR? Peça. Para revisar a fundo o lado visual, sugira o agente `artista`.
+
 ## Como responder
 
 - Comece com um veredito de uma linha: **pronto para PR**, **pronto com ajustes pequenos** ou **precisa de mudanças**.

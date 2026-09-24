@@ -26,4 +26,5 @@ Você cuida dos sistemas que cumprem o **requisito obrigatório** da disciplina:
 - Deixe parâmetros ajustáveis (`@export`): alcance do som, velocidade, probabilidades por dia.
 - Quando possível, **ofereça um modo de depuração** que desenhe o grafo, o caminho do A\* e o alcance do som na tela. Ajuda a testar e rende uma ótima demonstração na apresentação.
 - Ao terminar um sistema, escreva um resumo curto em `docs/` explicando o algoritmo, a complexidade e onde ele aparece no jogo — é material direto para a apresentação.
+- A luz dos fungos é compartilhada: você e a jogabilidade calculam a intensidade (decaimento com o tempo e a distância); a aparência da luz e os shaders são do agente `artista`.
 - Nunca faça commit na `main`; trabalhe numa branch `feat/...`.
