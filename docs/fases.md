@@ -1,168 +1,87 @@
 # Fases e puzzles
 
-Tudo que é **específico de cada fase** fica aqui: salas, Insones, puzzles, sonho e o que o jogador descobre. O GDD (`gdd.md`, item 4) descreve o campus em geral; este arquivo é o detalhamento de uma fase de cada vez.
+Tudo que é **específico de cada fase** do Projeto The Game fica aqui: salas, Insones, puzzles, sonho e o que o jogador descobre. O GDD (`gdd.md`, item 4) descreve o campus em geral; este arquivo detalha uma fase de cada vez.
 
 - **Dono:** papel 4 (Roteiro e fases). Qualquer um pode propor mudança por PR.
-- **O que tem ⚠️ é proposta**, não decisão. Quando o grupo fechar, tire o ⚠️ e registre em `decisoes.md`.
+- Aqui só entra o que já foi decidido (no GDD ou em `decisoes.md`). O que ainda não foi decidido fica como _a definir_.
 - Se algo aqui contradizer `decisoes.md`, vale `decisoes.md`.
 
 ---
 
-## Como os puzzles são organizados
+## Como organizar os puzzles
 
-### 1. Todo puzzle é uma aresta trancada do grafo
+### 1. Todo puzzle é uma passagem do grafo
 
-O campus já é um grafo (salas = nós, passagens = arestas). Um puzzle **não é um minijogo solto**: é uma passagem fechada. Resolver o puzzle liga uma **flag** do mundo, e a flag abre a aresta.
+No GDD, o campus é um grafo (salas = nós, passagens = arestas) e a progressão é "por passagens abertas, mecanismos e senhas". Então cada puzzle é uma **passagem fechada**: resolver o puzzle liga uma **flag** no dicionário de flags do mundo, e a flag abre a aresta.
 
-```
-[Salão da Biblioteca] --(porta do Acervo: precisa de flag acervo_aberto)--> [Acervo]
-```
+Assim os puzzles usam o grafo e as flags que já estão no GDD (item 2.4), sem código especial para cada um.
 
-Isso liga os puzzles direto ao sistema de grafos (papel 1) e ao dicionário de flags (estruturas de dados), sem código especial para cada puzzle.
+### 2. De onde vem a pista
 
-### 2. A regra do jogo: a pista vem do sonho, a solução é no presente
+O GDD diz que as passagens se abrem "parte com o que se encontra nas ruínas e parte com o que se aprende nos sonhos". Cada ficha de puzzle registra de qual dos dois vem a pista.
 
-Quase todo puzzle segue o mesmo formato, que é o gancho do VIGÍLIA:
+### 3. Tipos de puzzle
 
-| Etapa | Onde acontece | Exemplo |
-|---|---|---|
-| **Obstáculo** | presente, nas ruínas | cadeado com senha de 4 dígitos |
-| **Pista** | sonho (ou uma marca nas ruínas) | no sonho, alguém fala a senha ou ela aparece num quadro |
-| **Solução** | presente, com Insones por perto | voltar à porta e digitar sem ser ouvido |
+Os tipos saem das mecânicas do GDD. Servem para variar e não repetir o mesmo puzzle em todas as fases.
 
-Puzzles só com pista das ruínas também valem, mas o sonho deve ser a fonte principal. Evitem puzzle cuja pista esteja na mesma sala do obstáculo — tira a razão de explorar e de dormir.
-
-### 3. Tipos de puzzle (para não repetir)
-
-| Tipo | O que é | Onde combina |
-|---|---|---|
-| **Senha** | código, combinação, número de sala | cadeados, cofre do NAMI e da Reitoria |
-| **Horário** | só dá para passar quando o Insone está em outra sala da grade | Blocos de aula (Professor) |
-| **Distração** | fazer barulho num lugar para liberar outro (usa o BFS do som) | Biblioteca, Centro de Convivência |
-| **Ambiente** | empurrar estante, subir por árvore, derrubar algo para criar passagem (cria aresta nova) | qualquer área |
-| **Luz** | revelar algo só visível com fungo, ou apagar a luz para passar pelo Vigia | Espaço Cultural, NAMI |
-| **Observação** | ler tracinhos, anéis da árvore, relíquias, e deduzir um número | Biblioteca, Blocos de aula |
+| Tipo | Mecânica do GDD que usa |
+|---|---|
+| **Senha** | senhas aprendidas nos sonhos |
+| **Horário** | ler a grade: saber onde cada Insone está a cada hora |
+| **Distração** | jogar objetos e fazer barulho (som por BFS) |
+| **Ambiente** | tetos desabados, frestas, árvores caídas, andares enterrados |
+| **Luz** | fungos bioluminescentes |
+| **Observação** | examinar objetos e marcas nas paredes |
 
 ### 4. Ficha de cada puzzle
 
-Cada puzzle tem um ID `FASE-NN` (ex.: `SEG-01`) e uma ficha curta na seção da fase:
+Cada puzzle recebe um ID `FASE-NN` (ex.: `SEG-01`, `TER-01`) e uma ficha na seção da fase:
 
 ```
 ### SEG-01 — Nome do puzzle
-- Tipo: senha / horário / distração / ambiente / luz / observação
-- Onde: sala onde está o obstáculo
+- Tipo:
+- Onde: sala do obstáculo
 - Obstáculo: o que impede o jogador
-- Pista: onde está a pista (sonho X, parede da sala Y)
+- Pista: onde está (sonho ou ruínas, e em que sala)
 - Solução: o que o jogador faz
-- Libera: flag que liga + aresta/sala/item que abre
-- Depende de: IDs de puzzles ou flags que precisam vir antes
+- Libera: nome da flag + passagem/sala/item que abre
+- Depende de: IDs ou flags que precisam vir antes
 - Perigo: qual Insone ameaça durante o puzzle
 - Status: ideia / aprovado / implementado
 ```
 
-O campo **Libera** usa o mesmo nome de flag que vai para o código (`snake_case`), para o papel 1 e o papel 2 usarem a mesma lista.
+O campo **Libera** usa o mesmo nome de flag que vai para o código (`snake_case`), para que roteiro e programação usem a mesma lista.
 
 ### 5. Mapa de dependências
 
-Cada fase tem um diagrama de "o que precisa vir antes do quê". Ele mostra na hora se tem puzzle sem pista, pista que não leva a nada ou fase que trava. O GitHub desenha diagramas `mermaid` direto no arquivo.
+Cada fase pode ter um diagrama `mermaid` (o GitHub desenha sozinho) mostrando o que precisa vir antes do quê. Serve para ver se algum puzzle ficou sem pista ou se a fase pode travar.
 
-Esse mapa é um **grafo dirigido sem ciclos**. Dá para apresentar na disciplina: a ordem em que o jogador consegue resolver tudo é uma **ordenação topológica** dele, e um ciclo no mapa é um bug de design (o jogo trava).
+Esse mapa é um grafo dirigido: a ordem possível de resolução é uma ordenação topológica, e um ciclo nele significa que a fase trava.
 
 ---
 
 ## Resumo das fases
 
-| Dia | Área | Insones ativos | Descoberta principal | Status |
-|---|---|---|---|---|
-| Segunda | Biblioteca | Bibliotecária, Rafa | Ele dormiu muito; as pessoas ainda estão aqui | em roteiro (Sprint 1) |
-| Terça | Blocos de aula | Professor, Vigia, Rafa | Os Insones seguem a grade; os tracinhos contam séculos | ideia |
-| Quarta | Centro de Convivência e Espaço Cultural | Calouros, Vigia, Rafa | Houve uma pesquisa com voluntários | ideia |
-| Quinta | NAMI | Pesquisadora, Vigia, Rafa | VIGÍLIA-7, os testes e o nome dele na lista | ideia |
-| Sexta | Reitoria e portão | todos | Quanto tempo passou e o que houve com o mundo | ideia |
+Conforme a tabela de progressão do GDD (item 2).
+
+| Dia | Área | O que se descobre |
+|---|---|---|
+| Segunda | Biblioteca | Ele dormiu muito. As pessoas ainda estão aqui — ou o que sobrou delas. |
+| Terça | Blocos de aula | Os Insones seguem a grade da semana de provas. Os tracinhos contados nas paredes indicam séculos. |
+| Quarta | Centro de Convivência e Espaço Cultural | Havia uma pesquisa com voluntários naquela semana. |
+| Quinta | NAMI | O estimulante, os testes, a lista de voluntários — e o nome dele nela. |
+| Sexta | Reitoria e portão principal | Quanto tempo passou de verdade, e o que aconteceu com o mundo lá fora. |
+
+Em todas as fases: Rafa "é o Insone que aparece em todos os dias" (GDD, item 3).
 
 ---
 
 ## Segunda — Biblioteca
 
-**Função:** tutorial e primeiro contato. É o **marco do Sprint 4**: tem que funcionar do começo ao fim sozinha. Por isso é a fase mais detalhada.
-
-- **Objetivo do jogador:** sair da Biblioteca.
-- **Descoberta:** ele dormiu muito tempo; as pessoas ainda estão aqui, mas mudaram.
-- **Insones:** Bibliotecária (audição: barulho na Biblioteca atrai ela na hora). ⚠️ Rafa só aparece de relance, sem perseguir.
-- **Mecânicas ensinadas, nesta ordem:** andar → examinar → pegar fungo (luz) → esconder-se → distrair → dormir e sonhar.
-
-### Salas (nós do grafo) ⚠️
-
-| ID | Sala | Esconderijos | Observação |
-|---|---|---|---|
-| `bib_cabine` | Cabine de estudo onde Gabriel acorda | cabine | início do jogo |
-| `bib_salao` | Salão com a árvore | estantes caídas | rota da Bibliotecária |
-| `bib_acervo` | Acervo | armário | trancado no começo |
-| `bib_sala_segura` | Sala fechada para dormir | — | primeiro save |
-| `bib_saida` | Saída / catraca | — | fim da fase |
-
-### Puzzles ⚠️
-
-#### SEG-01 — Sair da cabine
-- Tipo: ambiente
-- Onde: `bib_cabine`
-- Obstáculo: estante caída bloqueando a saída
-- Pista: nenhuma (tutorial de examinar e empurrar)
-- Solução: empurrar a estante devagar; empurrar rápido faz barulho
-- Libera: `cabine_livre` → aresta `bib_cabine`–`bib_salao`
-- Depende de: —
-- Perigo: nenhum (primeiro som da Bibliotecária ao fundo)
-- Status: ideia
-
-#### SEG-02 — Passar pela Bibliotecária
-- Tipo: distração
-- Onde: `bib_salao`
-- Obstáculo: a Bibliotecária arrumando a estante na frente do caminho
-- Pista: ela reage a qualquer barulho (o jogador descobre ao ser caçado ou ao ver um objeto cair)
-- Solução: jogar um objeto longe para atraí-la, passar enquanto ela investiga
-- Libera: `salao_atravessado` → acesso a `bib_sala_segura`
-- Depende de: SEG-01
-- Perigo: Bibliotecária
-- Status: ideia
-
-#### SEG-03 — Senha do Acervo
-- Tipo: senha
-- Onde: `bib_acervo`
-- Obstáculo: porta do Acervo com cadeado de números
-- Pista: **primeiro sonho** — Rafa comenta o código do armário/acervo, ou ele está num aviso no balcão
-- Solução: voltar do sonho e digitar a senha
-- Libera: `acervo_aberto` → aresta `bib_salao`–`bib_acervo`, item que abre a saída
-- Depende de: SEG-02, `sonho_segunda_visto`
-- Perigo: Bibliotecária (digitar faz barulho baixo)
-- Status: ideia
-
-### Sonho da Segunda ⚠️
-- **Quando:** primeira vez que dorme em `bib_sala_segura`.
-- **Cena:** a Biblioteca na noite antes de tudo; Rafa estudando com Gabriel.
-- **O jogador leva de volta:** a senha do Acervo (SEG-03) e a primeira menção à pesquisa com voluntários.
-- Roteiro detalhado: `roteiro/sonho_segunda.md` (a criar).
-
-### Dependências
-
-```mermaid
-graph LR
-  SEG01[SEG-01 sair da cabine] --> SEG02[SEG-02 passar pela Bibliotecária]
-  SEG02 --> DORMIR[dormir na sala segura]
-  DORMIR --> SONHO[sonho da Segunda]
-  SONHO --> SEG03[SEG-03 senha do Acervo]
-  SEG02 --> SEG03
-  SEG03 --> FIM[saída da Biblioteca]
-```
-
----
-
-## Terça — Blocos de aula
-
-- **Objetivo do jogador:** ⚠️ a definir
-- **Descoberta:** os Insones seguem a grade da semana de provas; os tracinhos nas paredes contam séculos.
-- **Insones:** Professor (troca de sala conforme a grade), Vigia, Rafa.
-- **Tipo de puzzle dominante:** horário — o jogador usa a grade aprendida no sonho para saber quando cada sala está vazia.
-- **Ideias soltas:** ⚠️ contar tracinhos para chegar a um número; quadro de horário no sonho.
+- **O que o GDD já diz:** tutorial e primeiro contato. Silêncio é regra: correr aqui chama a Bibliotecária. Estantes caídas e vazias, uma árvore no meio do salão, luz do sol por um teto aberto.
+- **Insones:** Bibliotecária, Rafa.
+- **Marco do Sprint 4** (`equipe.md`): a Biblioteca jogável do começo ao fim.
+- **Objetivo:** _a definir_
 
 ### Salas
 _A definir._
@@ -170,18 +89,35 @@ _A definir._
 ### Puzzles
 _A definir._
 
-### Sonho da Terça
+### Sonho
+_A definir._
+
+---
+
+## Terça — Blocos de aula
+
+- **O que o GDD já diz:** corredores parcialmente enterrados em areia, salas sem teto, quadros nas paredes, paredes cobertas de tracinhos. Onde a grade mais importa: o Professor muda de sala a cada horário.
+- **Insones:** Professor, Rafa.
+- **Objetivo:** _a definir_
+
+### Salas
+_A definir._
+
+### Puzzles
+_A definir._
+
+### Sonho
 _A definir._
 
 ---
 
 ## Quarta — Centro de Convivência e Espaço Cultural
 
-- **Objetivo do jogador:** ⚠️ a definir
-- **Descoberta:** havia uma pesquisa com voluntários naquela semana.
-- **Insones:** Calouros (em grupo), Vigia, Rafa.
-- **Tipo de puzzle dominante:** distração (Centro de Convivência) e luz/visual (Espaço Cultural).
-- **Ideias soltas:** ⚠️ cartaz *"Durma menos. Renda mais."*; cápsula do tempo.
+- **O que o GDD já diz:**
+  - Centro de Convivência: área ampla, poucos esconderijos, os Calouros andam em grupo.
+  - Espaço Cultural: galeria escura, fungos nas paredes, puzzles visuais e as primeiras peças do projeto VIGÍLIA-7.
+- **Insones:** Calouros, Rafa.
+- **Objetivo:** _a definir_
 
 ### Salas
 _A definir._
@@ -189,18 +125,16 @@ _A definir._
 ### Puzzles
 _A definir._
 
-### Sonho da Quarta
+### Sonho
 _A definir._
 
 ---
 
 ## Quinta — NAMI
 
-- **Objetivo do jogador:** ⚠️ a definir
-- **Descoberta:** o VIGÍLIA-7, os testes, a lista de voluntários e o nome de Gabriel nela.
-- **Insones:** Pesquisadora, Vigia, Rafa.
-- **Tipo de puzzle dominante:** senha (cofre) e luz (andar alagado, escuro).
-- **Ideias soltas:** ⚠️ as palavras soltas da Pesquisadora só fazem sentido depois dos sonhos.
+- **O que o GDD já diz:** corredores de azulejo rachado, macas, andar de baixo alagado, só a luz dos fungos. O ponto alto da tensão e das revelações. A Pesquisadora fica no fundo do NAMI.
+- **Insones:** Pesquisadora, Rafa.
+- **Objetivo:** _a definir_
 
 ### Salas
 _A definir._
@@ -208,17 +142,16 @@ _A definir._
 ### Puzzles
 _A definir._
 
-### Sonho da Quinta
+### Sonho
 _A definir._
 
 ---
 
 ## Sexta — Reitoria e portão
 
-- **Objetivo do jogador:** chegar ao portão principal e escolher o final.
-- **Descoberta:** quanto tempo passou de verdade e o que aconteceu com o mundo.
-- **Insones:** todos.
-- **Finais:** sair sozinho / fazer o campus dormir. As opções dependem das flags ligadas ao longo do jogo. ⚠️ Definir quais flags liberam cada final.
+- **O que o GDD já diz:** o prédio mais conservado, com o cofre e os arquivos; do lado de fora do portão, só vegetação. É o final: sair sozinho ou fazer o campus dormir, e as opções dependem do que o jogador descobriu.
+- **Insones:** Rafa. Demais _a definir_.
+- **Objetivo:** chegar ao portão principal.
 
 ### Salas
 _A definir._
@@ -226,5 +159,5 @@ _A definir._
 ### Puzzles
 _A definir._
 
-### Sonho da Sexta
+### Sonho
 _A definir._
