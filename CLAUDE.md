@@ -1,10 +1,10 @@
-# CLAUDE.md — contexto do projeto VIGÍLIA
+# CLAUDE.md — contexto do Projeto The Game
 
 Este arquivo dá contexto a qualquer sessão do Claude que trabalhe neste repositório. Leia antes de mexer em qualquer coisa.
 
 ## O projeto
 
-**VIGÍLIA** (título provisório) é o jogo do trabalho de Computação Gráfica (Semestre 6) de um grupo de 4 alunos da Unifor.
+**Projeto The Game** é o jogo do trabalho de Computação Gráfica (Semestre 6) de um grupo de 4 alunos da Unifor.
 
 - **Premissa:** Gabriel, um aluno, pega no sono estudando na Biblioteca da Unifor na véspera da semana de provas e acorda **mil anos depois**. O campus virou ruína tomada pela natureza. As pessoas que estavam lá naquela semana ainda estão — transformadas nos **Insones**, que repetem há mil anos a rotina da semana de provas. Gabriel investiga para descobrir o que aconteceu.
 - **Estilo:** pixel art em vista lateral 2.5D, inspirado em *Five Nights at Freddy's: Into the Pit*. Terror atmosférico, fuga e esconderijo, defesa limitada.

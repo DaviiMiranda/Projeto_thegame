@@ -1,6 +1,6 @@
-# VIGÍLIA
+# Projeto The Game
 
-*Título provisório.* Jogo de terror em pixel art 2.5D, feito em Godot 4.7 para a disciplina de Computação Gráfica — Unifor, Semestre 6.
+Jogo de terror em pixel art 2.5D, feito em Godot 4.7 para a disciplina de Computação Gráfica — Unifor, Semestre 6.
 
 > Gabriel pega no sono estudando na Biblioteca da Unifor na véspera da semana de provas e acorda mil anos depois. O campus virou ruína, e as pessoas que estavam lá ainda estão — sem nunca terem dormido.
 
@@ -35,8 +35,8 @@ git config --global user.email "seu-email-do-github@exemplo.com"
 
 ```bash
 cd C:\dev
-git clone https://github.com/USUARIO/vigilia.git
-cd vigilia
+git clone https://github.com/DaviiMiranda/Projeto_thegame.git
+cd Projeto_thegame
 ```
 
 ### 4. Abra no Godot

@@ -13,6 +13,11 @@ Formato:
 
 ---
 
+## 2026-09-24 — Nome do jogo: Projeto The Game
+**Decisão:** o jogo se chama Projeto The Game (substitui o provisório "VIGÍLIA"). O estimulante da história continua se chamando VIGÍLIA-7.
+**Por quê:** escolha do grupo.
+**Afeta:** README, GDD, CLAUDE.md e `project.godot` — já atualizados.
+
 ## 2026-09-24 — Protagonista se chama Gabriel
 **Decisão:** o nome do protagonista é Gabriel (substitui o provisório "Téo").
 **Por quê:** escolha do grupo.
