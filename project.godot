@@ -1,5 +1,10 @@
-; Arquivo de configuração do projeto Godot.
-; Aberto pela primeira vez no Godot 4.7, ele pode ser atualizado automaticamente — commite a mudança.
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
 
 config_version=5
 
