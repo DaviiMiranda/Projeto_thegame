@@ -6,6 +6,7 @@ config_version=5
 [application]
 
 config/name="Projeto The Game"
+run/main_scene="res://cenas/menu_principal.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [display]
