@@ -138,6 +138,8 @@ As opções disponíveis dependem do que o jogador descobriu ao longo do jogo.
 
 ## 4. Níveis e Ambientes
 
+> O detalhamento de cada fase (salas, puzzles, sonhos) fica em [`fases.md`](fases.md).
+
 ### Estrutura dos Níveis
 
 Um campus contínuo, dividido em **cinco áreas** ligadas entre si, uma aberta a cada dia. As áreas visitadas continuam acessíveis — voltar faz parte do jogo, e cada volta encontra os Insones num horário diferente da grade.

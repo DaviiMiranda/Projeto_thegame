@@ -9,6 +9,7 @@
 | Arquivo | O que tem |
 |---|---|
 | [`docs/gdd.md`](docs/gdd.md) | Game Design Document (itens 1 a 4) |
+| [`docs/fases.md`](docs/fases.md) | Cada fase em detalhe: salas, Insones, puzzles e sonho |
 | [`docs/decisoes.md`](docs/decisoes.md) | Registro das decisões de design e de história, com data |
 | [`docs/equipe.md`](docs/equipe.md) | Papéis e divisão de tarefas |
 | [`docs/roteiro/`](docs/roteiro/) | História, personagens, diálogos |
