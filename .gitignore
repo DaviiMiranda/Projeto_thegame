@@ -1,0 +1,21 @@
+# Cache do Godot 4 (gerado automaticamente, nunca commitar)
+.godot/
+
+# Exportações do jogo (builds)
+exports/
+*.exe
+*.pck
+
+# Backups automáticos do Blender e editores
+*.blend1
+*.blend2
+*.tmp
+*~
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Configurações locais do Claude (as compartilhadas ficam em .claude/agents)
+.claude/settings.local.json
