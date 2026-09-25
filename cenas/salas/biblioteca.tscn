@@ -1,0 +1,487 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://cbk4hsrp0m71x" path="res://scripts/salas/sala.gd" id="1_sala"]
+[ext_resource type="PackedScene" path="res://cenas/personagens/gabriel.tscn" id="2_gabriel"]
+[ext_resource type="Shader" uid="uid://cb8ygb308rjtx" path="res://shaders/raios_de_sol.gdshader" id="3_raios"]
+[ext_resource type="Shader" uid="uid://dkfsu5mqayu3p" path="res://shaders/vinheta.gdshader" id="4_vinheta"]
+[ext_resource type="Script" uid="uid://hw73x131ple" path="res://scripts/salas/luz_pulsante.gd" id="5_pulsante"]
+[ext_resource type="Texture2D" uid="uid://c0edn1sdwkasp" path="res://assets/sprites/salas/biblioteca/biblioteca_ceu.png" id="t_ceu"]
+[ext_resource type="Texture2D" uid="uid://dglxwc7al2aj7" path="res://assets/sprites/salas/biblioteca/biblioteca_fundo.png" id="t_fundo"]
+[ext_resource type="Texture2D" uid="uid://c1igp2y6yy0jq" path="res://assets/sprites/salas/biblioteca/biblioteca_chao.png" id="t_chao"]
+[ext_resource type="Texture2D" uid="uid://op72as7kmv8i" path="res://assets/sprites/salas/biblioteca/biblioteca_frente.png" id="t_frente"]
+[ext_resource type="Texture2D" uid="uid://dtfpmqdy5b1wa" path="res://assets/sprites/salas/biblioteca/biblioteca_luz.png" id="t_luz"]
+[ext_resource type="Texture2D" uid="uid://c0qu6poorufdo" path="res://assets/sprites/salas/biblioteca/biblioteca_cabine.png" id="t_cabine"]
+[ext_resource type="Texture2D" uid="uid://bc4556xda2fr6" path="res://assets/sprites/salas/biblioteca/biblioteca_cadeira.png" id="t_cadeira"]
+[ext_resource type="Texture2D" uid="uid://bui1vb23nym7o" path="res://assets/sprites/salas/biblioteca/biblioteca_arvore.png" id="t_arvore"]
+[ext_resource type="Texture2D" uid="uid://cyx4bu1ntyk5h" path="res://assets/sprites/salas/biblioteca/biblioteca_entulho.png" id="t_entulho"]
+[ext_resource type="Texture2D" uid="uid://bwv7wv1mentc" path="res://assets/sprites/salas/biblioteca/biblioteca_estante_caida.png" id="t_estante_caida"]
+[ext_resource type="Texture2D" uid="uid://bbjgdlb1o1pdm" path="res://assets/sprites/salas/biblioteca/biblioteca_estante_vazia.png" id="t_estante_vazia"]
+[ext_resource type="Texture2D" uid="uid://ce6b6hk441tux" path="res://assets/sprites/salas/biblioteca/biblioteca_estante_quebrada.png" id="t_estante_quebrada"]
+[ext_resource type="Texture2D" uid="uid://bc6pvf7x8yr1u" path="res://assets/sprites/salas/biblioteca/biblioteca_livros.png" id="t_livros"]
+[ext_resource type="Texture2D" uid="uid://do7c664fnfxyc" path="res://assets/sprites/salas/biblioteca/biblioteca_mesa_leitura.png" id="t_mesa_leitura"]
+[ext_resource type="Texture2D" uid="uid://5opmqch30c1h" path="res://assets/sprites/salas/biblioteca/biblioteca_carrinho.png" id="t_carrinho"]
+[ext_resource type="Texture2D" uid="uid://b77fvu7mg1vc" path="res://assets/sprites/salas/biblioteca/biblioteca_fungo.png" id="t_fungo"]
+
+[sub_resource type="ShaderMaterial" id="Raios_grande"]
+shader = ExtResource("3_raios")
+shader_parameter/cor = Color(1, 0.88, 0.62, 1)
+shader_parameter/forca = 1.4
+shader_parameter/direcao = Vector2(0.5, 1)
+shader_parameter/origem = Vector2(114, -8)
+shader_parameter/largura = 230.0
+shader_parameter/comprimento = 200.0
+shader_parameter/degraus = 4.0
+shader_parameter/tamanho = Vector2(340, 180)
+
+[sub_resource type="ShaderMaterial" id="Raios_pequeno"]
+shader = ExtResource("3_raios")
+shader_parameter/cor = Color(1, 0.88, 0.62, 1)
+shader_parameter/forca = 1.1
+shader_parameter/direcao = Vector2(0.5, 1)
+shader_parameter/origem = Vector2(49, -4)
+shader_parameter/largura = 90.0
+shader_parameter/comprimento = 170.0
+shader_parameter/degraus = 4.0
+shader_parameter/tamanho = Vector2(170, 180)
+
+[sub_resource type="ShaderMaterial" id="Vinheta"]
+shader = ExtResource("4_vinheta")
+
+[sub_resource type="CanvasItemMaterial" id="SemLuz"]
+light_mode = 1
+
+[sub_resource type="RectangleShape2D" id="Pegada_cabine"]
+size = Vector2(74, 16)
+
+[sub_resource type="RectangleShape2D" id="Pegada_cadeira"]
+size = Vector2(14, 4)
+
+[sub_resource type="RectangleShape2D" id="Pegada_arvore"]
+size = Vector2(32, 8)
+
+[sub_resource type="RectangleShape2D" id="Pegada_entulho"]
+size = Vector2(36, 6)
+
+[sub_resource type="RectangleShape2D" id="Pegada_estante_caida"]
+size = Vector2(88, 14)
+
+[sub_resource type="RectangleShape2D" id="Pegada_estante_vazia"]
+size = Vector2(64, 8)
+
+[sub_resource type="RectangleShape2D" id="Pegada_estante_quebrada"]
+size = Vector2(64, 8)
+
+[sub_resource type="RectangleShape2D" id="Pegada_livros"]
+size = Vector2(22, 5)
+
+[sub_resource type="RectangleShape2D" id="Pegada_mesa_leitura"]
+size = Vector2(88, 9)
+
+[sub_resource type="RectangleShape2D" id="Pegada_carrinho"]
+size = Vector2(36, 6)
+
+[sub_resource type="RectangleShape2D" id="Limite_h"]
+size = Vector2(1000, 40)
+
+[sub_resource type="RectangleShape2D" id="Limite_v"]
+size = Vector2(40, 200)
+
+[node name="Biblioteca" type="Node2D"]
+script = ExtResource("1_sala")
+id = "biblioteca"
+
+[node name="Ceu" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.5, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Ceu"]
+self_modulate = Color(1.9, 1.85, 1.6, 1)
+texture = ExtResource("t_ceu")
+centered = false
+
+[node name="Fundo" type="Sprite2D" parent="."]
+texture = ExtResource("t_fundo")
+centered = false
+
+[node name="Chao" type="Sprite2D" parent="."]
+texture = ExtResource("t_chao")
+centered = false
+
+[node name="Objetos" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Gabriel" parent="Objetos" instance=ExtResource("2_gabriel")]
+position = Vector2(124, 150)
+
+[node name="Camera2D" type="Camera2D" parent="Objetos/Gabriel"]
+position = Vector2(0, -30)
+limit_left = 0
+limit_top = 0
+limit_right = 960
+limit_bottom = 180
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="Cabine" type="StaticBody2D" parent="Objetos"]
+position = Vector2(96, 128)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Cabine"]
+texture = ExtResource("t_cabine")
+centered = false
+offset = Vector2(-40, -66)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/Cabine"]
+position = Vector2(0, -8.0)
+shape = SubResource("Pegada_cabine")
+
+[node name="Cadeira" type="StaticBody2D" parent="Objetos"]
+position = Vector2(152, 142)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Cadeira"]
+texture = ExtResource("t_cadeira")
+centered = false
+offset = Vector2(-11, -29)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/Cadeira"]
+position = Vector2(0, -2.0)
+shape = SubResource("Pegada_cadeira")
+
+[node name="Arvore" type="StaticBody2D" parent="Objetos"]
+position = Vector2(238, 140)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Arvore"]
+texture = ExtResource("t_arvore")
+centered = false
+offset = Vector2(-60, -154)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/Arvore"]
+position = Vector2(0, -4.0)
+shape = SubResource("Pegada_arvore")
+
+[node name="Entulho1" type="StaticBody2D" parent="Objetos"]
+position = Vector2(318, 126)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Entulho1"]
+texture = ExtResource("t_entulho")
+centered = false
+offset = Vector2(-23, -24)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/Entulho1"]
+position = Vector2(0, -3.0)
+shape = SubResource("Pegada_entulho")
+
+[node name="EstanteCaida" type="StaticBody2D" parent="Objetos"]
+position = Vector2(362, 174)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/EstanteCaida"]
+texture = ExtResource("t_estante_caida")
+centered = false
+offset = Vector2(-47, -27)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/EstanteCaida"]
+position = Vector2(0, -7.0)
+shape = SubResource("Pegada_estante_caida")
+
+[node name="EstanteVazia" type="StaticBody2D" parent="Objetos"]
+position = Vector2(440, 134)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/EstanteVazia"]
+texture = ExtResource("t_estante_vazia")
+centered = false
+offset = Vector2(-34, -89)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/EstanteVazia"]
+position = Vector2(0, -4.0)
+shape = SubResource("Pegada_estante_vazia")
+
+[node name="Livros1" type="StaticBody2D" parent="Objetos"]
+position = Vector2(494, 170)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Livros1"]
+texture = ExtResource("t_livros")
+centered = false
+offset = Vector2(-14, -16)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/Livros1"]
+position = Vector2(0, -2.5)
+shape = SubResource("Pegada_livros")
+
+[node name="MesaLeitura" type="StaticBody2D" parent="Objetos"]
+position = Vector2(572, 156)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/MesaLeitura"]
+texture = ExtResource("t_mesa_leitura")
+centered = false
+offset = Vector2(-49, -40)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/MesaLeitura"]
+position = Vector2(0, -4.5)
+shape = SubResource("Pegada_mesa_leitura")
+
+[node name="Entulho2" type="StaticBody2D" parent="Objetos"]
+position = Vector2(652, 124)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Entulho2"]
+texture = ExtResource("t_entulho")
+centered = false
+offset = Vector2(-23, -24)
+flip_h = true
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/Entulho2"]
+position = Vector2(0, -3.0)
+shape = SubResource("Pegada_entulho")
+
+[node name="Carrinho" type="StaticBody2D" parent="Objetos"]
+position = Vector2(706, 150)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Carrinho"]
+texture = ExtResource("t_carrinho")
+centered = false
+offset = Vector2(-21, -38)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/Carrinho"]
+position = Vector2(0, -3.0)
+shape = SubResource("Pegada_carrinho")
+
+[node name="EstanteQuebrada" type="StaticBody2D" parent="Objetos"]
+position = Vector2(800, 134)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/EstanteQuebrada"]
+texture = ExtResource("t_estante_quebrada")
+centered = false
+offset = Vector2(-34, -89)
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/EstanteQuebrada"]
+position = Vector2(0, -4.0)
+shape = SubResource("Pegada_estante_quebrada")
+
+[node name="Livros2" type="StaticBody2D" parent="Objetos"]
+position = Vector2(878, 164)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Livros2"]
+texture = ExtResource("t_livros")
+centered = false
+offset = Vector2(-14, -16)
+flip_h = true
+
+[node name="Pegada" type="CollisionShape2D" parent="Objetos/Livros2"]
+position = Vector2(0, -2.5)
+shape = SubResource("Pegada_livros")
+
+[node name="Fungo1" type="Node2D" parent="Objetos"]
+position = Vector2(758, 168)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Fungo1"]
+texture = ExtResource("t_fungo")
+centered = false
+offset = Vector2(-8, -11)
+
+[node name="Fungo2" type="Node2D" parent="Objetos"]
+position = Vector2(846, 140)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Fungo2"]
+texture = ExtResource("t_fungo")
+centered = false
+offset = Vector2(-8, -11)
+flip_h = true
+
+[node name="Fungo3" type="Node2D" parent="Objetos"]
+position = Vector2(912, 124)
+
+[node name="Sprite2D" type="Sprite2D" parent="Objetos/Fungo3"]
+texture = ExtResource("t_fungo")
+centered = false
+offset = Vector2(-8, -11)
+
+[node name="RaiosGrande" type="ColorRect" parent="."]
+material = SubResource("Raios_grande")
+offset_left = 130.0
+offset_right = 470.0
+offset_bottom = 180.0
+mouse_filter = 2
+
+[node name="RaiosPequeno" type="ColorRect" parent="."]
+material = SubResource("Raios_pequeno")
+offset_left = 590.0
+offset_right = 760.0
+offset_bottom = 180.0
+mouse_filter = 2
+
+[node name="Poeira" type="CPUParticles2D" parent="."]
+position = Vector2(300, 90)
+amount = 50
+lifetime = 9.0
+preprocess = 9.0
+emission_shape = 3
+direction = Vector2(0.4, 1)
+spread = 70.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+color = Color(1, 0.92, 0.7, 0.7)
+emission_rect_extents = Vector2(110, 70)
+
+[node name="PoeiraPequena" type="CPUParticles2D" parent="."]
+position = Vector2(690, 100)
+amount = 18
+lifetime = 9.0
+preprocess = 9.0
+emission_shape = 3
+direction = Vector2(0.4, 1)
+spread = 70.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 4.0
+color = Color(1, 0.92, 0.7, 0.7)
+emission_rect_extents = Vector2(40, 60)
+
+[node name="Frente" type="Sprite2D" parent="."]
+texture = ExtResource("t_frente")
+centered = false
+
+[node name="Limites" type="StaticBody2D" parent="."]
+
+[node name="Fundo" type="CollisionShape2D" parent="Limites"]
+position = Vector2(480, 98)
+shape = SubResource("Limite_h")
+
+[node name="Frente" type="CollisionShape2D" parent="Limites"]
+position = Vector2(480, 197)
+shape = SubResource("Limite_h")
+
+[node name="Esquerda" type="CollisionShape2D" parent="Limites"]
+position = Vector2(0, 90)
+shape = SubResource("Limite_v")
+
+[node name="Direita" type="CollisionShape2D" parent="Limites"]
+position = Vector2(960, 90)
+shape = SubResource("Limite_v")
+
+[node name="Luzes" type="Node2D" parent="."]
+
+[node name="SolGrande" type="PointLight2D" parent="Luzes"]
+position = Vector2(300, 120)
+scale = Vector2(4.6, 3.4)
+color = Color(1, 0.84, 0.6, 1)
+energy = 1.3
+texture = ExtResource("t_luz")
+
+[node name="SolChao" type="PointLight2D" parent="Luzes"]
+position = Vector2(310, 150)
+scale = Vector2(3.2, 1.2)
+color = Color(1, 0.84, 0.6, 1)
+energy = 0.7
+texture = ExtResource("t_luz")
+
+[node name="SolPequeno" type="PointLight2D" parent="Luzes"]
+position = Vector2(690, 130)
+scale = Vector2(1.9, 2.4)
+color = Color(1, 0.84, 0.6, 1)
+energy = 0.8
+texture = ExtResource("t_luz")
+
+[node name="Rebatida" type="PointLight2D" parent="Luzes"]
+position = Vector2(520, 110)
+scale = Vector2(5, 3)
+color = Color(0.55, 0.65, 0.85, 1)
+energy = 0.3
+texture = ExtResource("t_luz")
+
+[node name="Janelas" type="PointLight2D" parent="Luzes"]
+position = Vector2(80, 60)
+scale = Vector2(3, 2)
+color = Color(0.6, 0.75, 0.9, 1)
+energy = 0.35
+texture = ExtResource("t_luz")
+
+[node name="Fungo1" type="PointLight2D" parent="Luzes"]
+position = Vector2(758, 164)
+scale = Vector2(2.2, 2.2)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.8
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Fungo2" type="PointLight2D" parent="Luzes"]
+position = Vector2(846, 136)
+scale = Vector2(1.8, 1.8)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.7
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Fungo3" type="PointLight2D" parent="Luzes"]
+position = Vector2(912, 120)
+scale = Vector2(2.0, 2.0)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.8
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Fungo4" type="PointLight2D" parent="Luzes"]
+position = Vector2(758, 96)
+scale = Vector2(1.6, 1.6)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.6
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Fungo5" type="PointLight2D" parent="Luzes"]
+position = Vector2(870, 72)
+scale = Vector2(1.4, 1.4)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.5
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Fungo6" type="PointLight2D" parent="Luzes"]
+position = Vector2(930, 104)
+scale = Vector2(2.2, 2.2)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.8
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Fungo7" type="PointLight2D" parent="Luzes"]
+position = Vector2(800, 104)
+scale = Vector2(2.4, 2.4)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.7
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Fungo8" type="PointLight2D" parent="Luzes"]
+position = Vector2(786, 150)
+scale = Vector2(1.4, 1.4)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.6
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Fungo9" type="PointLight2D" parent="Luzes"]
+position = Vector2(934, 162)
+scale = Vector2(1.8, 1.8)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.7
+texture = ExtResource("t_luz")
+script = ExtResource("5_pulsante")
+
+[node name="Escuridao" type="CanvasModulate" parent="."]
+color = Color(0.52, 0.54, 0.64, 1)
+
+[node name="Vinheta" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Tela" type="ColorRect" parent="Vinheta"]
+material = SubResource("Vinheta")
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+
+[node name="Transicao" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Escuro" type="ColorRect" parent="Transicao"]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

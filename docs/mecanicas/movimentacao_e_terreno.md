@@ -2,13 +2,13 @@
 
 ## 1. Modos de Locomoção
 
-Gabriel possui três estados primários de movimentação horizontal em vista lateral 2.5D:
+Gabriel possui três estados primários de movimentação em vista lateral 2.5D. Ele anda em todas as direções dentro da faixa de chão: `A`/`D` (ou ←/→) para os lados e `W`/`S` (ou ↑/↓) para o fundo/frente da sala, um pouco mais devagar (65%), passando na frente e atrás dos objetos:
 
 | Ação | Tecla Padrão | Velocidade | Consumo de Estamina | Nível de Ruído Acústico |
 |---|---|---|---|---|
-| **Andar** | `A` / `D` ou Setas | Normal (100%) | Zero | Baixo (ouvido apenas na mesma sala) |
+| **Andar** | `WASD` ou Setas | Normal (100%) | Zero | Baixo (ouvido apenas na mesma sala) |
 | **Correr** | `Shift` + Direção | Rápido (180%) | Constante (~4s contínuos) | **Alto** (propaga até 2 salas no grafo) |
-| **Agachar / Esgueirar** | `Ctrl` ou `S` | Lento (50%) | Zero | **Silencioso** (ruído zero) |
+| **Agachar / Esgueirar** | `Ctrl` ou `C` | Lento (50%) | Zero | **Silencioso** (ruído zero) |
 
 ---
 
@@ -35,4 +35,4 @@ O som gerado pelos passos varia conforme o piso sobre o qual Gabriel se move:
 
 - **Frestas e Desabamentos:** Vãos baixos causados por tetos caídos exigem que o jogador se agache para atravessar.
 - **Subida por Troncos Caídos:** Certos caminhos verticais entre andares quebrados utilizam árvores e vigas retorcidas como rampas de acesso.
-- **Transição de Planos de Profundidade:** Pressionar `W` ou seta para cima em portas, escadarias e vãos permite que Gabriel alterne entre o plano frontal e o plano de fundo do cenário 2.5D.
+- **Transição de Planos de Profundidade:** Interagir com portas, escadarias e vãos (tecla a definir: `W` agora anda para o fundo da sala) permite que Gabriel alterne entre o plano frontal e o plano de fundo do cenário 2.5D.
