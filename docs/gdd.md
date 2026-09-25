@@ -1,10 +1,19 @@
 # GDD — respostas dos itens 1 a 4
 
-> **Título do Jogo:** Projeto The Game
->
-> **Integrantes:** [preencher]
+> **Título do Jogo:** Projeto The Game  
+> **Hierarquia:** Para decisões recentes, consulte [`decisoes.md`](decisoes.md). Para a documentação técnica aprofundada, consulte o índice mestre em [`README.md`](README.md).
 
-*Versão com o protagonista acordando mil anos no futuro. Nomes de personagens são provisórios. Os lugares da Unifor são usados apenas como cenário; pessoas, pesquisa e acontecimentos são fictícios.*
+> [!TIP]
+> **Documentação Modular Detalhada:**
+> - 🎯 **[Visão Geral e Pilares](visao_geral/conceito.md)** | **[Estilo Artístico 2.5D](visao_geral/estilo_artistico.md)**
+> - ⚙️ **[Mecânicas e Core Loop](mecanicas/README.md)** | **[Furtividade](mecanicas/furtividade_e_esconderijos.md)** | **[Iluminação](mecanicas/iluminacao_e_fungos.md)** | **[Sono e Sonhos](mecanicas/sono_e_sonhos.md)**
+> - 💻 **[Conceitos de Computação](computacao/README.md)** (Grafos, Coloração, BFS, A*, Markov, Shaders)
+> - 📜 **[História e Lore](historia/README.md)** | **[Os Dois Finais](historia/narrativa_e_finais.md)** | **[Relíquias](historia/reliquias_e_lore.md)**
+> - 👥 **[Personagens](personagens/README.md)** ([Gabriel](personagens/gabriel.md), [Rafa](personagens/rafa.md), [Insones](personagens/insones.md))
+> - 🗺️ **[Fases e Progressão](fases/README.md)** (Segunda a Sexta)
+> - 💬 **[Diálogos e Murmúrios](dialogos/README.md)**
+
+*Versão com o protagonista acordando mil anos no futuro. Os lugares da Unifor são usados apenas como cenário; pessoas, pesquisa e acontecimentos são fictícios.*
 
 ---
 
