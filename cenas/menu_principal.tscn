@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/menu/menu_fundo.png" id="4_fundo"]
 [ext_resource type="Texture2D" path="res://assets/sprites/menu/menu_mesa.png" id="5_mesa"]
 [ext_resource type="Texture2D" path="res://assets/sprites/menu/menu_frente.png" id="6_frente"]
+[ext_resource type="AudioStream" path="res://assets/audio/musica/menu/menu_trilha.mp3" id="7_trilha"]
 
 [sub_resource type="Gradient" id="Gradient_luz"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -132,3 +133,8 @@ deslocamento_maximo = 10.0
 position = Vector2(-10, -10)
 texture = ExtResource("6_frente")
 centered = false
+
+[node name="Musica" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_trilha")
+volume_db = -6.0
+autoplay = true
