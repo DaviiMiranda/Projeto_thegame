@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://ceu4fdnt24e6v" path="res://assets/sprites/cenario/paredes/parede_placa.png" id="1_peca"]
+
+[node name="ParedePlaca" type="Sprite2D"]
+texture = ExtResource("1_peca")
+centered = false

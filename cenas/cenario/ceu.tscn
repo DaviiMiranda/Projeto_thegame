@@ -1,0 +1,13 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://dknguklobj54p" path="res://assets/sprites/cenario/ceu/ceu.png" id="1_ceu"]
+
+[node name="Ceu" type="Parallax2D"]
+scroll_scale = Vector2(0.5, 1)
+repeat_size = Vector2(320, 0)
+repeat_times = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1.9, 1.85, 1.6, 1)
+texture = ExtResource("1_ceu")
+centered = false

@@ -1,0 +1,8 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://ba24itdtdywdo" path="res://assets/sprites/cenario/chao/chao_tapete.png" id="1_peca"]
+
+[node name="ChaoTapete" type="Sprite2D"]
+texture = ExtResource("1_peca")
+centered = false
+offset = Vector2(0, 112)

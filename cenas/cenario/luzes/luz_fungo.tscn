@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://dtfpmqdy5b1wa" path="res://assets/sprites/cenario/luzes/luz.png" id="1_luz"]
+[ext_resource type="Script" uid="uid://hw73x131ple" path="res://scripts/salas/luz_pulsante.gd" id="2_pulsante"]
+
+[node name="LuzFungo" type="PointLight2D"]
+scale = Vector2(2, 2)
+color = Color(0.35, 1, 0.88, 1)
+energy = 0.8
+texture = ExtResource("1_luz")
+script = ExtResource("2_pulsante")

@@ -1,0 +1,19 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://kj31b6jbiwy2" path="res://scripts/cenario/objeto_cenario.gd" id="1_objeto"]
+[ext_resource type="Texture2D" uid="uid://c0qu6poorufdo" path="res://assets/sprites/cenario/objetos/cabine.png" id="2_sprite"]
+
+[sub_resource type="RectangleShape2D" id="Pegada"]
+size = Vector2(74, 16)
+
+[node name="Cabine" type="StaticBody2D"]
+script = ExtResource("1_objeto")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_sprite")
+centered = false
+offset = Vector2(-40, -66)
+
+[node name="Pegada" type="CollisionShape2D" parent="."]
+position = Vector2(0, -8)
+shape = SubResource("Pegada")
