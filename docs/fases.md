@@ -1,96 +1,15 @@
-# Fases e puzzles
+# Fases e Áreas — Visão Geral
 
-Tudo que é **específico de cada fase** do Projeto The Game fica aqui: salas, puzzles e sonho. O GDD (`gdd.md`, itens 2 e 4) descreve o campus e a progressão em geral; este arquivo detalha uma fase de cada vez.
+Tudo que é específico de cada fase e área do **Projeto The Game** fica documentado na pasta [`fases/`](fases/): salas, puzzles, Insones presentes e eventos de sonho.
 
-- **Dono:** papel 4 (Roteiro e fases). Qualquer um pode propor mudança por PR.
-- Se algo aqui contradizer `decisoes.md`, vale `decisoes.md`.
-
----
-
-## Segunda — Biblioteca
-
-- **Insones:** Bibliotecária, Rafa.
-
-### Objetivo
-_A definir._
-
-### Salas
-_A definir._
-
-### Puzzles
-_A definir._
-
-### Sonho
-_A definir._
+> [!NOTE]
+> A divisão e o conteúdo específico das fases estão em definição pelo grupo e serão preenchidos à medida que o design for fechado.
+> - Para entender o funcionamento do design de fases, consulte [`fases/README.md`](fases/README.md).
+> - Para criar uma nova fase/área documentada, utilize o modelo [`fases/template_fase.md`](fases/template_fase.md).
 
 ---
 
-## Terça — Blocos de aula
+## Diretrizes de Fase
 
-- **Insones:** Professor, Rafa.
-
-### Objetivo
-_A definir._
-
-### Salas
-_A definir._
-
-### Puzzles
-_A definir._
-
-### Sonho
-_A definir._
-
----
-
-## Quarta — Centro de Convivência e Espaço Cultural
-
-- **Insones:** Calouros, Rafa.
-
-### Objetivo
-_A definir._
-
-### Salas
-_A definir._
-
-### Puzzles
-_A definir._
-
-### Sonho
-_A definir._
-
----
-
-## Quinta — NAMI
-
-- **Insones:** Pesquisadora, Rafa.
-
-### Objetivo
-_A definir._
-
-### Salas
-_A definir._
-
-### Puzzles
-_A definir._
-
-### Sonho
-_A definir._
-
----
-
-## Sexta — Reitoria e portão
-
-- **Insones:** Rafa. Demais _a definir_.
-
-### Objetivo
-_A definir._
-
-### Salas
-_A definir._
-
-### Puzzles
-_A definir._
-
-### Sonho
-_A definir._
+- **Dono:** Papel 4 (Roteiro e fases). Mudanças passam por PR.
+- Se algo aqui ou nos documentos de fases contradizer [`decisoes.md`](decisoes.md), vale [`decisoes.md`](decisoes.md).

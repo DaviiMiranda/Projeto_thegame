@@ -1,10 +1,19 @@
 # GDD — respostas dos itens 1 a 4
 
-> **Título do Jogo:** Projeto The Game
->
-> **Integrantes:** [preencher]
+> **Título do Jogo:** Projeto The Game  
+> **Hierarquia:** Para decisões recentes, consulte [`decisoes.md`](decisoes.md). Para a documentação técnica aprofundada, consulte o índice mestre em [`README.md`](README.md).
 
-*Versão com o protagonista acordando mil anos no futuro. Nomes de personagens são provisórios. Os lugares da Unifor são usados apenas como cenário; pessoas, pesquisa e acontecimentos são fictícios.*
+> [!TIP]
+> **Documentação Modular Detalhada:**
+> - 🎯 **[Visão Geral e Pilares](visao_geral/conceito.md)** | **[Estilo Artístico 2.5D](visao_geral/estilo_artistico.md)**
+> - ⚙️ **[Mecânicas e Core Loop](mecanicas/README.md)** | **[Furtividade](mecanicas/furtividade_e_esconderijos.md)** | **[Iluminação](mecanicas/iluminacao_e_fungos.md)** | **[Sono e Sonhos](mecanicas/sono_e_sonhos.md)**
+> - 💻 **[Conceitos de Computação](computacao/README.md)** (Grafos, Coloração, BFS, A*, Markov, Shaders)
+> - 📜 **[Estrutura Narrativa](historia/README.md)** | **[Template de Documentos](historia/template_documento.md)**
+> - 👥 **[Personagens e IA](personagens/README.md)** ([Gabriel](personagens/gabriel.md), [Insones](personagens/insones.md), [Template](personagens/template_personagem.md))
+> - 🗺️ **[Design de Fases](fases/README.md)** | **[Template de Fase](fases/template_fase.md)**
+> - 💬 **[Sistema de Diálogos](dialogos/README.md)** | **[Template de Diálogo](dialogos/template_dialogo.md)**
+
+*Versão com o protagonista acordando mil anos no futuro. Os lugares da Unifor são usados apenas como cenário; pessoas, pesquisa e acontecimentos são fictícios.*
 
 ---
 

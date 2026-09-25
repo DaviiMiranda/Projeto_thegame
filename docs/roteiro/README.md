@@ -1,11 +1,26 @@
-# Roteiro
+# Roteiro e Narrativa
 
-Pasta da história do jogo. Um arquivo por assunto, por exemplo:
+Esta pasta abriga a estrutura de roteirização cinematográfica e cutscenes do jogo.
 
-- `personagens.md` — quem é cada personagem, aparência, o que quer, o que esconde
-- `sonho_segunda.md` — o que acontece no primeiro sonho
-- `documentos_nami.md` — textos que o jogador encontra no NAMI
+---
 
-**O que já está definido** está em `../gdd.md` (item 3) e `../decisoes.md`. Qualquer ideia nova que mude a história passa pela conversa do grupo antes de virar cânone.
+## 📚 Mapa da Narrativa Completa
 
-Lembrete de cenário: os lugares da Unifor são reais, mas **pessoas, pesquisa e acontecimentos são fictícios**.
+A narrativa e os roteiros do jogo estão distribuídos nos seguintes módulos integrados:
+
+- 🎬 **Cutscenes do Jogo:** [`cutscenes/`](cutscenes/)
+  - Padrão de implementação e estrutura técnica de cutscenes no Godot: [`cutscenes/README.md`](cutscenes/README.md)
+  - Cutscene de Abertura: [`cutscenes/seg_acordar.md`](cutscenes/seg_acordar.md)
+- 📖 **Estrutura Narrativa:** [`../historia/`](../historia/)
+  - Funcionamento da entrega narrativa e narrativa ambiental: [`../historia/README.md`](../historia/README.md)
+  - Modelo para novos documentos e relíquias: [`../historia/template_documento.md`](../historia/template_documento.md)
+- 👥 **Personagens:** [`../personagens/`](../personagens/)
+  - Arquitetura de personagens e modelo para novas fichas: [`../personagens/template_personagem.md`](../personagens/template_personagem.md)
+- 💬 **Diálogos:** [`../dialogos/`](../dialogos/)
+  - Arquitetura técnica do sistema de diálogos: [`../dialogos/README.md`](../dialogos/README.md)
+  - Modelo estrutural para redação de falas: [`../dialogos/template_dialogo.md`](../dialogos/template_dialogo.md)
+
+---
+
+> [!NOTE]
+> Qualquer ideia nova que altere a história ou as decisões narrativas deve ser acordada em grupo e registrada em [`../decisoes.md`](../decisoes.md).
