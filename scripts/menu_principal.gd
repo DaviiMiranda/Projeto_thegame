@@ -23,6 +23,8 @@ signal opcoes_pedidas
 @onready var botao_continuar: Button = $Mesa/Menu/BotaoContinuar
 @onready var botao_opcoes: Button = $Mesa/Menu/BotaoOpcoes
 @onready var botao_sair: Button = $Mesa/Menu/BotaoSair
+## Trilha do menu. É filha desta cena, então para sozinha quando o jogo troca de cena.
+@onready var musica: AudioStreamPlayer = $Musica
 
 # Ruído suave para a luz oscilar de um jeito irregular, não em ritmo fixo.
 var _ruido := FastNoiseLite.new()
@@ -42,6 +44,10 @@ func _ready() -> void:
 	botao_novo_jogo.grab_focus()
 
 	_ruido.frequency = 0.05
+
+	# A trilha recomeça do início quando acaba, sem pausa.
+	if musica.stream:
+		musica.stream.set("loop", true)
 
 
 func _process(delta: float) -> void:

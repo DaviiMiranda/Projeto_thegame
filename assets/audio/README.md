@@ -40,7 +40,7 @@ Formato: `onde_o_que_variacao.ext`, em `snake_case`, português, sem acento.
 
 | Tipo | Formato | Por quê |
 |---|---|---|
-| Música e ambiente | `.ogg` | arquivo pequeno, bom para sons longos em loop |
+| Música e ambiente | `.ogg` ou `.mp3` | arquivo pequeno, bom para sons longos em loop |
 | Efeitos e interface | `.wav` | toca sem atraso, bom para sons curtos |
 | Vozes | `.ogg` | falas longas ficam pequenas |
 
