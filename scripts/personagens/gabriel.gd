@@ -1,48 +1,80 @@
 class_name Gabriel
 extends CharacterBody2D
-## O Gabriel controlado pelo jogador: andar, correr e agachar.
+## O Gabriel controlado pelo jogador: andar, correr e agachar em 2.5D.
+##
+## "2.5D" aqui é o jeito do FNAF: Into the Pit: a sala é vista de lado, mas
+## o chão tem profundidade. Ele anda para a esquerda/direita (eixo x) e
+## também para o fundo/frente da sala (eixo y da tela: para cima = mais
+## longe, para baixo = mais perto). Não existe pulo nem gravidade.
+##
+## A posição do nó (o ponto de origem) fica nos PÉS. Isso importa por dois
+## motivos:
+##   1. Colisão: só os pés colidem (um retângulo baixo), como se fosse a
+##      "pegada" dele no chão. Assim ele pode passar com a cabeça na frente
+##      de uma estante sem bater nela.
+##   2. Y-sort: a sala ordena quem é desenhado na frente pelo y do nó. Quem
+##      tem o pé mais embaixo na tela está mais perto da câmera e aparece na
+##      frente. Com o pé como origem, o Gabriel passa atrás e na frente das
+##      estantes, da árvore e da mesa sozinho.
 ##
 ## Versão mínima para a primeira sala ficar jogável. Estamina, ruído dos
 ## passos e esconderijos ficam para o papel 2 (docs/mecanicas/).
 ## As teclas estão em Projeto > Configurações do Projeto > Mapa de Entrada:
-## mover_esquerda, mover_direita, correr e agachar.
+## mover_esquerda, mover_direita, mover_cima, mover_baixo, correr e agachar.
 
-## Velocidade andando, em pixels por segundo.
+## Velocidade andando para os lados, em pixels por segundo.
 @export var velocidade_andar: float = 45.0
+## Andar para o fundo/frente é mais lento que para os lados. Na tela, o chão
+## está "achatado" pela perspectiva (1 px na vertical vale mais distância que
+## 1 px na horizontal), então a mesma velocidade pareceria rápida demais.
+@export var fator_profundidade: float = 0.65
 ## Quantas vezes mais rápido ao correr (docs/mecanicas: 180%).
 @export var multiplicador_correr: float = 1.8
 ## Quantas vezes mais devagar agachado (docs/mecanicas: 50%).
 @export var multiplicador_agachar: float = 0.5
-## Aceleração da gravidade, em pixels por segundo ao quadrado.
-@export var gravidade: float = 600.0
 
 ## Verdadeiro enquanto o jogador segura a tecla de agachar.
 var agachado := false
+## Verdadeiro enquanto ele está correndo (e se mexendo). O papel 2 vai usar
+## isso para a estamina e o barulho dos passos.
+var correndo := false
 
 @onready var sprite: Sprite2D = $Sprite2D
 
 
-func _physics_process(delta: float) -> void:
-	# Gravidade: só puxa para baixo quando ele não está no chão.
-	if not is_on_floor():
-		velocity.y += gravidade * delta
+func _ready() -> void:
+	# Modo "flutuante": o CharacterBody2D não tem chão nem teto, todas as
+	# direções são iguais. É o modo certo para jogos vistos de cima/2.5D.
+	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 
-	# -1 = esquerda, 0 = parado, 1 = direita.
-	var direcao := Input.get_axis("mover_esquerda", "mover_direita")
+
+func _physics_process(_delta: float) -> void:
+	# get_vector junta as 4 teclas num vetor (x, y), cada eixo de -1 a 1.
+	# Na diagonal ele daria (1, 1), de comprimento √2 ≈ 1,41: andaria 41%
+	# mais rápido. get_vector já corrige isso, "normalizando": se o
+	# comprimento passa de 1, divide o vetor pelo comprimento. Resultado:
+	# a diagonal tem comprimento 1, como as outras direções.
+	var direcao := Input.get_vector("mover_esquerda", "mover_direita", "mover_cima", "mover_baixo")
 
 	agachado = Input.is_action_pressed("agachar")
+	correndo = false
 	var velocidade := velocidade_andar
 	if agachado:
 		velocidade *= multiplicador_agachar
-	elif Input.is_action_pressed("correr"):
+	elif Input.is_action_pressed("correr") and direcao != Vector2.ZERO:
 		velocidade *= multiplicador_correr
+		correndo = true
 
-	velocity.x = direcao * velocidade
+	# Multiplica cada eixo separado: o y fica mais lento (profundidade).
+	velocity = Vector2(direcao.x, direcao.y * fator_profundidade) * velocidade
+	# move_and_slide anda e, se bater em algo, desliza ao longo da parede
+	# em vez de parar seco (é o que deixa ele "raspar" na estante).
 	move_and_slide()
 
 	# O sprite olha para a direita; espelha quando anda para a esquerda.
-	if direcao != 0.0:
-		sprite.flip_h = direcao < 0.0
+	# Andando só para cima/baixo, ele continua olhando para o último lado.
+	if direcao.x != 0.0:
+		sprite.flip_h = direcao.x < 0.0
 
 	# Provisório até existir o sprite agachado: achata o desenho.
 	sprite.scale.y = 0.75 if agachado else 1.0
