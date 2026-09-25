@@ -38,6 +38,7 @@ O que você **não** faz: desenhar a pixel art final. Ela é das pessoas do grup
 
 ```
 assets/sprites/   personagens, objetos, relíquias
+assets/sprites/personagens/<nome>/   ficha visual.md + sprites de cada personagem
 assets/tiles/     tiles dos cenários
 shaders/          shaders (.gdshader)
 cenas/            cenas do Godot (.tscn)
