@@ -45,8 +45,34 @@ As regras completas estão em `CONTRIBUTING.md`. O essencial:
 - **Nunca faça commit nem push na `main`.** Sempre trabalhe numa branch `tipo/descricao-curta`.
 - **Nunca use `git push --force`.**
 - Commits pequenos, mensagem no formato `tipo: o que mudou`, em português.
-- Ao terminar uma tarefa, **prepare o PR** (título e descrição no modelo de `.github/pull_request_template.md`), mas quem abre e quem aprova são as pessoas. O revisor principal é o Davi.
+- Ao terminar uma tarefa, faça o push e **abra o PR** (título e descrição no modelo de `.github/pull_request_template.md`). **Só mescle quando o usuário pedir.** O revisor principal é o Davi.
 - Não edite cenas (`.tscn`) ou arquivos de arte de outra pessoa sem que o usuário confirme que pode.
+
+### Toda tarefa numa pasta separada (git worktree)
+
+A pasta `Projeto_thegame` é compartilhada: outras pessoas e outras sessões do Claude trabalham nela ao mesmo tempo. **Nunca troque de branch nem faça mudanças diretamente nela.** Trocar a branch ali muda os arquivos debaixo de quem está trabalhando, e o commit dessa pessoa acaba na branch errada.
+
+Em vez disso, para cada tarefa:
+
+1. **Crie uma pasta separada com a branch nova, a partir da `main` atualizada**, ao lado da pasta do projeto:
+   ```bash
+   git fetch origin
+   git worktree add ../Projeto_thegame-<tarefa> -b tipo/descricao-curta origin/main
+   ```
+   Ex.: `../Projeto_thegame-audio` com a branch `docs/estrutura-audio`. Se a tarefa depende de outra ainda não mesclada, crie a partir da branch dela e abra o PR apontando para ela.
+2. **Faça todas as mudanças e commits dentro dessa pasta.** A pasta `Projeto_thegame` não é tocada.
+3. **Push e PR** para a `main`: `git push -u origin <branch>` e `gh pr create`.
+4. **Se a mudança precisa do Godot** (gerar `.import`, testar a cena), peça ao usuário para abrir o projeto nessa pasta, e commite os `.import` gerados.
+5. **Mescle quando o usuário pedir**, com squash: `gh pr merge <número> --squash`.
+6. **Limpe depois do merge**, a partir da pasta `Projeto_thegame`:
+   ```bash
+   git push origin --delete <branch>
+   git worktree remove ../Projeto_thegame-<tarefa>
+   git branch -D <branch>
+   ```
+   Se o Windows não deixar apagar a pasta, algum programa está com ela aberta (Godot, Explorador ou o próprio terminal). Peça para fechar e tente de novo.
+
+A mesma regra vale para agentes do projeto: passe para eles o caminho da pasta separada e deixe claro que não devem mexer em `Projeto_thegame`.
 
 ## Como ajudar este grupo
 
