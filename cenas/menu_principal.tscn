@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/menu/menu_mesa.png" id="5_mesa"]
 [ext_resource type="Texture2D" path="res://assets/sprites/menu/menu_frente.png" id="6_frente"]
 [ext_resource type="AudioStream" path="res://assets/audio/musica/menu/menu_trilha.mp3" id="7_trilha"]
+[ext_resource type="PackedScene" path="res://cenas/cutscenes/seg_acordar.tscn" id="8_novo_jogo"]
 
 [sub_resource type="Gradient" id="Gradient_luz"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -45,6 +46,7 @@ Label/colors/font_color = Color(0.7, 0.85, 1, 1)
 script = ExtResource("1_menu")
 energia_luz = 0.4
 oscilacao_luz = 0.1
+cena_novo_jogo = ExtResource("8_novo_jogo")
 
 [node name="Fundo" type="Node2D" parent="."]
 script = ExtResource("2_camada")
