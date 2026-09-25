@@ -37,4 +37,4 @@ Toda cena de cutscene usa o script `scripts/cutscenes/cutscene.gd`: ela toca a a
 
 | Cutscene | Status |
 |---|---|
-| [`seg_acordar`](seg_acordar.md) | aprovada |
+| [`seg_acordar`](seg_acordar.md) | aprovada (cena provisória, sem falas) |
