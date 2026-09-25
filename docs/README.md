@@ -6,80 +6,76 @@ Bem-vindo ao repositório de documentação do **Projeto The Game**, jogo de ter
 
 ## 📌 Fonte da Verdade e Hierarquia
 
-Para evitar contradições em um projeto em constante evolução, adotamos a seguinte regra de precedência:
+Para manter a consistência entre o código, o design e o roteiro, adotamos a seguinte regra de precedência:
 
-1. **[`docs/decisoes.md`](decisoes.md)** — **Autoridade máxima**. Qualquer decisão recente de design, história ou técnica registrada aqui sobrepõe qualquer outro documento.
-2. **Documentos Específicos de Módulos** — Detalhes aprofundados sobre mecânicas, personagens, fases, computação ou diálogos contidos em suas respectivas pastas.
+1. **[`docs/decisoes.md`](decisoes.md)** — **Autoridade máxima**. Toda decisão recente de design, história ou técnica registrada aqui sobrepõe qualquer outro documento.
+2. **Documentos Específicos de Módulos** — Estruturações técnicas e mecânicas detalhadas em suas respectivas pastas.
 3. **[`docs/gdd.md`](gdd.md)** — Sumário executivo e visão geral unificada (Game Design Document).
 
 ---
 
 ## 🗺️ Mapa de Navegação da Documentação
 
-A documentação é dividida em módulos temáticos para facilitar o trabalho simultâneo da equipe e evitar conflitos no Git:
+A documentação é organizada de forma modular, servindo como guia de funcionamento de cada sistema e fornecendo templates padronizados para preenchimento:
 
 ```
 docs/
-├── README.md                     # Este mapa de navegação e índice mestre
-├── decisoes.md                   # Registro cronológico de decisões (ADRs)
-├── equipe.md                     # Papéis da equipe e entregas acadêmicas
-├── gdd.md                        # GDD resumido e visão executiva integrada
+├── README.md                      # Este mapa de navegação e índice mestre
+├── decisoes.md                    # Registro cronológico de decisões (ADRs)
+├── equipe.md                      # Papéis da equipe e entregas acadêmicas
+├── fases.md                       # Ponto de entrada para o design de fases
+├── gdd.md                         # GDD executivo integrado
 │
-├── visao_geral/                  # Pilares conceituais, escopo e identidade
-│   ├── conceito.md               # Premissa, público-alvo, plataforma e pilares centrais
-│   └── estilo_artistico.md       # Identidade visual 2.5D, iluminação e referências
+├── visao_geral/                   # Pilares conceituais, escopo e identidade
+│   ├── conceito.md                # Premissa, público-alvo, escopo e pilares de design
+│   └── estilo_artistico.md        # Identidade visual 2.5D, iluminação e pipeline Blender->Sprites
 │
-├── historia/                     # Universo, linha do tempo e narrativa
-│   ├── README.md                 # Visão geral da trama e estrutura narrativa
-│   ├── lore_e_mundo.md           # A Unifor mil anos no futuro e a tragédia do VIGÍLIA-7
-│   ├── narrativa_e_finais.md     # Revelações progressivas e os dois finais
-│   └── reliquias_e_lore.md       # Narrativa ambiental, marcas nas paredes e fósseis
-│
-├── personagens/                  # Fichas detalhadas de elenco
-│   ├── README.md                 # Guia de personagens e convenções
-│   ├── gabriel.md                # O protagonista: história, limitações e motivação
-│   ├── rafa.md                   # Melhor amigo no passado e caçador recorrente no presente
-│   └── insones.md                # Catálogo dos Insones: comportamentos, sentidos e rotinas
-│
-├── mecanicas/                    # Regras de jogo e jogabilidade
-│   ├── README.md                 # Core loop e dinâmica de jogo
-│   ├── movimentacao_e_terreno.md # Andar, correr, ruído acústico e travessia de ruínas
+├── mecanicas/                     # Regras de jogo e funcionamento dos sistemas
+│   ├── README.md                  # Diagrama do Core Loop de gameplay
+│   ├── movimentacao_e_terreno.md  # Andar, correr, estamina, ruído e tipos de superfícies
 │   ├── furtividade_e_esconderijos.md # Esconderijos, microgames de tensão e distrações
-│   ├── iluminacao_e_fungos.md    # Fungos bioluminescentes, lanterna de pote e clarão
-│   └── sono_e_sonhos.md          # Ponto de salvamento e mecânica de investigação no passado
+│   ├── iluminacao_e_fungos.md     # Pote de fungos, dilema luz/perigo e cápsulas de clarão
+│   └── sono_e_sonhos.md           # Salas seguras, mecânica de save e investigação no passado
 │
-├── computacao/                   # Requisitos obrigatórios de Computação Gráfica / CC
-│   ├── README.md                 # Mapa de aplicação dos algoritmos e estruturas
-│   ├── grafos_e_navegacao.md     # Campus modelado como grafo ponderado dinâmico
-│   ├── grade_e_coloracao.md      # Geração da grade de horários via coloração de grafos
-│   ├── ia_e_perseguicao.md       # BFS (som), A* (perseguição), Markov e FSM
-│   └── geometria_e_shaders.md    # Produto escalar para visão, raycasting e shaders
+├── computacao/                    # Requisitos da disciplina de Computação Gráfica / CC
+│   ├── README.md                  # Matriz de algoritmos aplicados ao jogo
+│   ├── grafos_e_navegacao.md      # Campus modelado como grafo ponderado dinâmico
+│   ├── grade_e_coloracao.md       # Algoritmo de coloração de grafos para horários de patrulha
+│   ├── ia_e_perseguicao.md        # BFS (som), A* (perseguição), Cadeia de Markov e FSM
+│   └── geometria_e_shaders.md     # Visão 2D por produto escalar, raycasting e shaders
 │
-├── fases/                        # Progressão dos 5 dias da semana de provas
-│   ├── README.md                 # Visão geral da semana e interconexão do campus
-│   ├── dia_1_biblioteca.md       # Segunda-feira: O despertar e o silêncio da Bibliotecária
-│   ├── dia_2_blocos_aula.md      # Terça-feira: Blocos de aula e as lições eternas do Professor
-│   ├── dia_3_centro_cultural.md  # Quarta-feira: Convivência e a horda dos Calouros
-│   ├── dia_4_nami.md             # Quinta-feira: NAMI, o laboratório e a Pesquisadora
-│   └── dia_5_reitoria.md         # Sexta-feira: Reitoria, cofre da verdade e fuga final
+├── fases/                         # Design de fases e áreas
+│   ├── README.md                  # Estrutura e funcionamento do level design no campus
+│   └── template_fase.md           # Modelo padronizado para documentação de novas fases/áreas
 │
-├── dialogos/                     # Textos, falas e sistema de conversação
-│   ├── README.md                 # Arquitetura técnica do sistema de diálogos
-│   ├── sonhos.md                 # Diálogos do passado pré-incidente (memórias vívidas)
-│   └── murmurios.md              # Falas fragmentadas dos Insones no presente
+├── personagens/                   # Fichas técnicas e mecânica de personagens
+│   ├── README.md                  # Arquitetura de personagens no Godot (Jogador vs Insones)
+│   ├── gabriel.md                 # Funcionamento mecânico do jogador (estados, estamina, inventário)
+│   ├── insones.md                 # Funcionamento dos inimigos de IA (sensores, FSM e sentidos)
+│   └── template_personagem.md     # Modelo padronizado para novas fichas de personagens
 │
-└── roteiro/                      # Roteirização cinematográfica e cutscenes
-    ├── README.md                 # Diretrizes de roteiro e direção de cenas
-    └── cutscenes/                # Documentação técnica e roteiro de cada cutscene
-        ├── README.md             # Padrão de cutscenes no Godot
-        └── seg_acordar.md        # Cutscene inicial do despertar de Gabriel
+├── dialogos/                      # Sistema de conversação e falas
+│   ├── README.md                  # Arquitetura técnica desacoplada via sinais no Godot 4.7
+│   └── template_dialogo.md        # Modelo estrutural (JSON / GDScript) para criação de diálogos
+│
+├── historia/                      # Estrutura narrativa e narrativa ambiental
+│   ├── README.md                  # Funcionamento das camadas narrativas (presente vs sonhos)
+│   └── template_documento.md      # Modelo padronizado para documentos, bilhetes e relíquias
+│
+└── roteiro/                       # Roteirização cinematográfica e cutscenes
+    ├── README.md                  # Diretrizes gerais de roteiro
+    └── cutscenes/                 # Estrutura técnica e documentação de cutscenes
+        ├── README.md              # Padrão de implementação de cutscenes no Godot
+        └── seg_acordar.md         # Cutscene inicial do despertar de Gabriel
 ```
 
 ---
 
-## ⚡ Guia Rápido para Colaboradores
+## ⚡ Guia Rápido para a Equipe
 
-- **Vai criar uma nova mecânica ou cena?** Consulte [`docs/mecanicas/`](mecanicas/) e [`docs/computacao/`](computacao/).
-- **Vai escrever diálogos ou histórias?** Consulte [`docs/historia/`](historia/) e [`docs/dialogos/`](dialogos/).
-- **Vai modelar ou criar sprites?** Consulte [`docs/visao_geral/estilo_artistico.md`](visao_geral/estilo_artistico.md) e [`docs/personagens/`](personagens/).
-- **Tomou uma decisão que muda o design ou o escopo?** Registre imediatamente em [`docs/decisoes.md`](decisoes.md).
+- **Vai criar ou alterar uma mecânica?** Consulte [`docs/mecanicas/`](mecanicas/) e [`docs/computacao/`](computacao/).
+- **Vai planejar uma sala ou área?** Utilize [`docs/fases/template_fase.md`](fases/template_fase.md).
+- **Vai criar uma nova fala ou diálogo?** Utilize [`docs/dialogos/template_dialogo.md`](dialogos/template_dialogo.md).
+- **Vai adicionar um documento ou relíquia de lore?** Utilize [`docs/historia/template_documento.md`](historia/template_documento.md).
+- **Vai adicionar um novo personagem ou inimigo?** Utilize [`docs/personagens/template_personagem.md`](personagens/template_personagem.md).
+- **Tomou uma decisão que muda o design ou escopo?** Registre imediatamente em [`docs/decisoes.md`](decisoes.md).

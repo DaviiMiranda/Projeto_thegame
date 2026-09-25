@@ -1,45 +1,51 @@
-# Personagens — Gabriel (Protagonista)
+# Personagens — Gabriel (Funcionamento do Jogador)
 
-## 1. Identidade e Perfil
-
-- **Nome Completo:** Gabriel *(nome consolidado em `docs/decisoes.md`)*
-- **Idade Aparente:** ~21 anos
-- **Ocupação Original:** Estudante universitário da Unifor (época dos exames finais de 2026).
-- **Situação no Presente:** Acorda mil anos no futuro em uma cabine da Biblioteca, com o corpo física e biologicamente intacto, sem entender a passagem do tempo.
+Este documento descreve como o personagem controlado pelo jogador funciona em termos de mecânica, estados e sistemas.
 
 ---
 
-## 2. Personalidade e Conflito Interno
+## 1. Identificação Básica
 
-- **O Homem Comum:** Gabriel não é soldado, atleta nem cientista forense. É um universitário comum que estava esgotado com prazos e provas. Suas reações são de choque genuíno, incredulidade e urgência para voltar para casa.
-- **O Peso da Descoberta:** Conforme avança e constata que seus amigos, professores e a sociedade inteira deixaram de existir há mil anos, seu objetivo migra da busca por socorro para a busca por sentido: *Por que eu? O que aconteceu com Rafa?*
-- **A Culpa do Sobrevivente:** Nos sonhos, ele conversa com Rafa na noite do estudo. No presente, vê o que Rafa se tornou. A percepção de que a mesma dose que destruiu seus colegas o preservou gera uma profunda crise existencial.
-
----
-
-## 3. O Efeito Inverso do VIGÍLIA-7
-
-- Gabriel assinou o termo de voluntário ao lado de Rafa sob forte pressão de prazos.
-- Devido a uma particularidade neuroquímica rara em seus receptores de adenosina, a molécula do VIGÍLIA-7 não induziu hiperativação contínua, mas sim um estado de hibernação profunda em suspensão animada (uma espécie de sono catatônico criogênico natural).
-- Durante mil anos, suas funções vitais operaram em taxa próxima de zero, protegendo suas células da senescência e do desgaste que consumiu os Insones.
+- **Nome:** Gabriel *(decisão registrada em `docs/decisoes.md`)*
+- **Tipo:** Protagonista / Personagem Controlável pelo Jogador
+- **Papel:** Aluno que acorda mil anos depois na Biblioteca e investiga as ruínas da Unifor.
 
 ---
 
-## 4. Características de Gameplay
+## 2. Estados de Movimentação (FSM do Jogador)
 
-- **Mobilidade:** Andar silencioso, corrida acelerada (que gera ruído propagável pelo grafo de salas e consome estamina), agachamento para frestas e buracos em lajes.
-- **Vulnerabilidade Extrema:** Gabriel não possui barras de vida extensas nem golpes de artes marciais. Um confronto direto com um Insone resulta em captura e morte quase imediata.
-- **Inventário Limitado:**
-  - Pote de vidro para cultivo de fungos bioluminescentes (lanterna).
-  - Cápsulas de clarão de fungos (atordoamento de emergência de uso único).
-  - Pedaços de pedras/entulho para distração auditiva.
-  - Caderno de anotações (onde desenha o mapa do campus e registra senhas dos sonhos).
-- **Habilidade Chave — Sonhar:** Em salas seguras com portas trancadas, Gabriel pode dormir. Essa ação salva o jogo e o transfere para os sonhos no passado.
+O script do jogador opera sob uma máquina de estados finita:
+
+| Estado | Velocidade | Emissão de Ruído Acústico | Consumo de Estamina | Descrição |
+|---|---|---|---|---|
+| **PARADO** | 0 px/s | Nula | Regeneração rápida | Em repouso. |
+| **ANDANDO** | Padrão (100%) | Baixo (mesma sala) | Nulo | Movimento padrão de exploração. |
+| **CORRENDO** | Rápido (180%) | **Alto** (propaga no grafo) | Alto (~4s contínuos) | Fuga rápida; alerta Insones próximos. |
+| **AGACHADO** | Lento (50%) | **Silencioso** | Nulo | Permite passar por vãos e não faz barulho. |
+| **ESCONDIDO** | 0 px/s | Condicionado ao microgame | Nulo | Dentro de armário ou cabine. |
+| **EXAUSTO** | Lento (40%) | Respiração ofegante | Nulo (bloqueio temporário) | Ocorre quando a estamina se esgota totalmente. |
 
 ---
 
-## 5. Referências Visuais
+## 3. Gestão de Inventário e Ferramentas
 
-- Documentação de arte detalhada: [`assets/sprites/personagens/gabriel/visual.md`](../../assets/sprites/personagens/gabriel/visual.md).
-- Modelagem 3D: [`assets/modelagem/personagens/gabriel.blend`](../../assets/modelagem/personagens/gabriel.blend).
-- Render script: [`assets/modelagem/personagens/gerar_gabriel.py`](../../assets/modelagem/personagens/gerar_gabriel.py).
+O jogador interage com o ambiente através de itens específicos:
+
+- **Pote de Fungos (Lanterna):**
+  - Alterna entre ligado/desligado.
+  - Ilumina a escuridão mas pode ser detectado pelo Vigia.
+- **Cápsulas de Clarão:**
+  - Item consumível de defesa (máximo 2 unidades).
+  - Atordoa temporariamente Insones próximos para permitir fuga.
+- **Objetos de Arremesso (Pedras/Entulho):**
+  - Geram distração acústica em salas distantes via propagação BFS.
+- **Caderno de Anotações:**
+  - Registra pistas, senhas e detalhes da grade horária descobertos nos sonhos.
+
+---
+
+## 4. Integração Técnica
+
+- **Cena:** `cenas/personagens/gabriel.tscn`
+- **Script:** `scripts/personagens/gabriel.gd`
+- **Assets de Arte:** `assets/sprites/personagens/gabriel/` e `assets/modelagem/personagens/gabriel.blend`

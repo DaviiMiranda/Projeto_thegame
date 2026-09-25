@@ -1,23 +1,23 @@
-# Diálogos — Arquitetura Técnica e Convenções
+# Diálogos — Arquitetura Técnica e Funcionamento
 
-Este documento define o padrão técnico e de roteirização para todos os textos, conversas e interações faladas de *Projeto The Game*.
-
----
-
-## 1. Princípios de Design dos Diálogos
-
-- **Minimalismo nas Ruínas (O Presente):** Os Insones não conversam nem explicam nada. O presente é marcado pelo silêncio, passos no entulho e murmúrios desconexos de autômatos. Informação em excesso no presente quebra o suspense.
-- **Riqueza e Familiaridade nos Sonhos (O Passado):** Nos sonhos, o diálogo é natural, rápido, recheado de gírias universitárias locais ("valei-me", "arretado", "matar aula", "café requentado", "virar a noite") e ansiedade com exames.
-- **Diálogo com Função de Gameplay:** Toda conversa nos sonhos fornece ao menos uma informação prática utilizável no presente (um código de armário, a grade horária de um professor, a localização de uma chave ou uma pista sobre o composto).
+Este documento define como o sistema de diálogos é estruturado e executado no **Projeto The Game**.
 
 ---
 
-## 2. Arquitetura Técnica no Godot 4.7
+## 1. Princípios de Funcionamento
 
-O sistema de diálogos é implementado de forma modular e desacoplada, utilizando sinais do Godot para não amarrar cenas de personagens à interface gráfica:
+O sistema de diálogos é projetado para ser leve, modular e totalmente desacoplado da jogabilidade através de **sinais do Godot 4.7**:
 
-### Sinais Canônicos (`GerenciadorDialogo`)
+- **Desacoplamento:** O personagem ou trigger de cena apenas emite a intenção de iniciar uma conversa (`iniciar_dialogo(id)`). Uma cena de interface dedicada (`CaixaDialogo`) ou autoload (`GerenciadorDialogo`) processa os nós de texto.
+- **Pausa Controlada:** Durante diálogos nos sonhos ou cutscenes, o movimento do jogador é suspenso mudando o estado do nó do jogador.
+- **Suporte a Múltiplos Formatos:** Suporta diálogos sequenciais, ramificações com escolhas simples e falas rápidas de uma linha (ex.: murmúrios ou pensamentos de Gabriel).
+
+---
+
+## 2. Arquitetura de Sinais
+
 ```gdscript
+# GerenciadorDialogo.gd (Autoload / Singleton)
 signal dialogo_iniciado(id_conversa: String)
 signal fala_exibida(locutor: String, texto: String, retrato: Texture2D)
 signal escolhas_exibidas(opcoes: Array[String])
@@ -25,38 +25,16 @@ signal escolha_selecionada(indice: int)
 signal dialogo_concluido(id_conversa: String)
 ```
 
-### Formato de Dados dos Diálogos (JSON / Dicionário GDScript)
-Os diálogos são armazenados em arquivos estruturados em `dialogos/` ou recursos GDScript:
-
-```json
-{
-  "conversa_id": "sonho_segunda_cabine",
-  "linhas": [
-    {
-      "locutor": "Rafa",
-      "texto": "Gabriel, acorda cara... Se o fiscal passar e ver você roncando em cima do resumo de Cálculo, já era.",
-      "retrato": "rafa_sonho_sorrindo",
-      "velocidade_texto": 0.03
-    },
-    {
-      "locutor": "Gabriel",
-      "texto": "Que horas são...? Minha cabeça tá parecendo um bloco de cimento.",
-      "retrato": "gabriel_cansado",
-      "velocidade_texto": 0.03
-    },
-    {
-      "locutor": "Rafa",
-      "texto": "Passou das duas da manhã. Toma um gole desse troço que peguei no NAMI. Chama VIGÍLIA-7. O sono zera na hora.",
-      "retrato": "rafa_sonho_oferecendo",
-      "velocidade_texto": 0.03
-    }
-  ]
-}
-```
+### Ciclo de Execução:
+1. Um gatilho de interação (ex.: conversar com um NPC em sonho) chama `GerenciadorDialogo.iniciar_dialogo("id_do_dialogo")`.
+2. O gerenciador emite `dialogo_iniciado`. A interface de usuário (HUD) se torna visível.
+3. Para cada linha de fala, emite `fala_exibida`. A UI exibe o nome do locutor, toca o som de digitação (*typewriter*) e mostra o retrato se houver.
+4. Quando o jogador clica para avançar (ou seleciona uma opção), avança para a próxima linha.
+5. Ao esgotar as linhas, emite `dialogo_concluido`. A UI é ocultada e o controle volta ao jogador.
 
 ---
 
-## 3. Módulos de Roteiro de Diálogos
+## 3. Modelo de Criação de Diálogo
 
-- **[`sonhos.md`](sonhos.md):** Diálogos completos de cada noite de sonho (Segunda a Sexta).
-- **[`murmurios.md`](murmurios.md):** Murmúrios audíveis, ecos e frases em loop dos Insones no presente.
+Para redigir ou incluir um novo diálogo no jogo, siga as diretrizes e os exemplos de formatação documentados em:
+👉 **[`template_dialogo.md`](template_dialogo.md)**

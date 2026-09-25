@@ -4,7 +4,7 @@
 
 Diferente de jogos com salvamento automático contínuo, no *Projeto The Game* salvar o jogo é uma decisão consciente do jogador integrada à narrativa:
 
-- **Localização:** Em cada uma das 5 grandes áreas do campus existe pelo menos uma **Sala Segura** (ex.: uma sala de professores com porta blindada, uma cabine isolada de estudo, uma enfermaria com tranca interna).
+- **Localização:** Em cada área do campus existe pelo menos uma **Sala Segura** (ex.: uma sala de professores com porta blindada, uma cabine isolada de estudo, uma enfermaria com tranca interna).
 - **Condição de Segurança:** Não deve haver Insones perseguindo Gabriel no momento da entrada. Gabriel deve passar a tranca na porta.
 - **O Ato de Dormir (`E` na cama/colchonete improvisado):**
   - **Salva o Jogo:** Serializa o estado atual (nós do grafo explorados, portas abertas, inventário de fungos e cápsulas, relíquias encontradas).
@@ -28,6 +28,6 @@ O sonho não é apenas uma cutscene passiva; é uma fase jogável de investigaç
 ## 3. Retorno ao Presente com Conhecimento
 
 Ao concluir a conversa ou puzzle investigativo do sonho, Gabriel desperta de volta nas ruínas:
-- O relógio do campus avança para a próxima etapa/dia.
+- O estado do campus avança para a próxima etapa da progressão narrativa.
 - As anotações do sonho ficam registradas no **Caderno de Gabriel** (acessível pelo inventário a qualquer momento para consulta rápida).
 - Uma nova área do campus é desbloqueada ou o jogador ganha os meios de ultrapassar a barreira que o impedia de avançar.

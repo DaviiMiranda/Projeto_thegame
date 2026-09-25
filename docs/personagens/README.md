@@ -1,25 +1,30 @@
-# Personagens — Índice e Visão Geral
+# Personagens — Estrutura e Funcionamento
 
-Esta seção reúne as fichas completas de todos os personagens de *Projeto The Game*, detalhando suas histórias, personalidades, papéis mecânicos no gameplay e sua dualidade entre o passado (sonhos) e o presente (ruínas).
-
----
-
-## 👥 Elenco do Jogo
-
-| Personagem | Papel no Presente (Mil Anos Depois) | Papel no Passado (Sonhos) | Arquivo |
-|---|---|---|---|
-| **Gabriel** | Protagonista; o único que dormiu; vulnerável e investigativo. | Aluno comum exausto estudando para a semana de provas. | [`gabriel.md`](gabriel.md) |
-| **Rafa** | O perseguidor mais constante e persistente; presença assustadora. | Melhor amigo de Gabriel; parceiro de estudos e confidente. | [`rafa.md`](rafa.md) |
-| **A Bibliotecária** | Insone acústica; patrulha estantes vazias na Biblioteca. | Funcionária atenciosa e rigorosa com o silêncio. | [`insones.md#a-bibliotecária`](insones.md#a-bibliotecária) |
-| **O Professor** | Insone de rotina; troca de sala de aula conforme os horários da grade. | Docente focado que prepara provas e orienta alunos. | [`insones.md#o-professor`](insones.md#o-professor) |
-| **O Vigia** | Insone sentinela; ronda noturna e sensível à luz dos fungos. | Guarda noturno solitário que risca calendários de turno. | [`insones.md#o-vigia`](insones.md#o-vigia) |
-| **Os Calouros** | Horda de Insones lentos em bando; bloqueiam corredores abertos. | Grupo barulhento e ansioso de novatos estudando em conjunto. | [`insones.md#os-calouros`](insones.md#os-calouros) |
-| **A Pesquisadora** | A mente do VIGÍLIA-7; reclusa no laboratório do NAMI; murmura verdades. | Cientista brilhante e convicta da revolução do foco contínuo. | [`insones.md#a-pesquisadora`](insones.md#a-pesquisadora) |
+Este documento define como os personagens são arquitetados e funcionam mecanicamente no **Projeto The Game**.
 
 ---
 
-## 🎭 Diretrizes para Caracterização
+## 🎭 Arquitetura de Personagens no Godot 4.7
 
-1. **Humanidade Antes do Terror:** Os Insones não são monstros grotescos gerados pelo mal; eram alunos, professores e funcionários comuns da universidade, presos numa tragédia da qual foram vítimas. O jogador deve sentir pena e tensão em igual medida.
-2. **Coerência da Rotina:** Cada ação de um Insone no presente deve espelhar o que ele fazia no passado, degradada pela repetição de milênios.
-3. **Modelos e Arte:** Referências visuais e assets 3D/2D estão documentados em [`assets/sprites/personagens/`](../../assets/sprites/personagens/) e [`assets/modelagem/personagens/`](../../assets/modelagem/personagens/).
+Conforme as regras do projeto, cada personagem é uma **cena isolada** (`.tscn`) com seu respectivo script (`.gd`):
+
+1. **O Jogador (Gabriel):**
+   - Controlado pelo usuário através de inputs (`CharacterBody2D`).
+   - Possui máquina de estados de locomoção (Parado, Andando, Correndo, Agachado, Escondido, Exausto).
+   - Detalhes mecânicos em [`gabriel.md`](gabriel.md).
+
+2. **Os Insones (Inimigos de IA):**
+   - Controlados por inteligência artificial autônoma (`CharacterBody2D`).
+   - Operam sob uma Máquina de Estados Finita (Rotina, Investigando, Caçando, Atordoado, Retornando).
+   - Possuem sensores de percepção (visão por produto escalar e raycast, audição conectada ao grafo BFS, fotossensibilidade).
+   - Detalhes de funcionamento em [`insones.md`](insones.md).
+
+3. **NPCs dos Sonhos (Interações Passivas):**
+   - Cenas leves focadas em interação de diálogo e passagem de informações investigativas.
+
+---
+
+## 📋 Como Criar uma Nova Ficha de Personagem
+
+Para documentar um novo personagem quando o grupo decidir seu papel narrativo e mecânico:
+👉 Utilize o modelo padronizado em **[`template_personagem.md`](template_personagem.md)**.

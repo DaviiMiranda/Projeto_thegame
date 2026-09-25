@@ -8,10 +8,10 @@
 > - 🎯 **[Visão Geral e Pilares](visao_geral/conceito.md)** | **[Estilo Artístico 2.5D](visao_geral/estilo_artistico.md)**
 > - ⚙️ **[Mecânicas e Core Loop](mecanicas/README.md)** | **[Furtividade](mecanicas/furtividade_e_esconderijos.md)** | **[Iluminação](mecanicas/iluminacao_e_fungos.md)** | **[Sono e Sonhos](mecanicas/sono_e_sonhos.md)**
 > - 💻 **[Conceitos de Computação](computacao/README.md)** (Grafos, Coloração, BFS, A*, Markov, Shaders)
-> - 📜 **[História e Lore](historia/README.md)** | **[Os Dois Finais](historia/narrativa_e_finais.md)** | **[Relíquias](historia/reliquias_e_lore.md)**
-> - 👥 **[Personagens](personagens/README.md)** ([Gabriel](personagens/gabriel.md), [Rafa](personagens/rafa.md), [Insones](personagens/insones.md))
-> - 🗺️ **[Fases e Progressão](fases/README.md)** (Segunda a Sexta)
-> - 💬 **[Diálogos e Murmúrios](dialogos/README.md)**
+> - 📜 **[Estrutura Narrativa](historia/README.md)** | **[Template de Documentos](historia/template_documento.md)**
+> - 👥 **[Personagens e IA](personagens/README.md)** ([Gabriel](personagens/gabriel.md), [Insones](personagens/insones.md), [Template](personagens/template_personagem.md))
+> - 🗺️ **[Design de Fases](fases/README.md)** | **[Template de Fase](fases/template_fase.md)**
+> - 💬 **[Sistema de Diálogos](dialogos/README.md)** | **[Template de Diálogo](dialogos/template_dialogo.md)**
 
 *Versão com o protagonista acordando mil anos no futuro. Os lugares da Unifor são usados apenas como cenário; pessoas, pesquisa e acontecimentos são fictícios.*
 

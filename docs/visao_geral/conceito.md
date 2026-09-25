@@ -41,6 +41,6 @@ Gabriel é um estudante comum, não um combatente. Fugir e se esconder é a regr
 ## 4. Escopo do Projeto
 
 O jogo foi concebido sob a filosofia de **"o menor passo que funciona com excelência"**:
-- **Ambiente Contínuo:** 5 áreas centrais da Unifor (Biblioteca, Blocos de Aulas, Centro de Convivência/Espaço Cultural, NAMI, Reitoria/Portão).
-- **Estrutura Temporal:** 5 dias narrativos (Segunda a Sexta-feira da semana de provas).
+- **Ambiente Contínuo:** Campus da Unifor em ruínas, com áreas interligadas por portas, passagens e atalhos no grafo.
+- **Progressão Narrativa:** Avanço por resolução de puzzles, exploração e conhecimento adquirido nos sonhos (divisão de fases a ser definida pela equipe).
 - **Entrega Acadêmica:** Atendimento integral aos requisitos da disciplina de Computação Gráfica através de mecânicas jogáveis (Grafos, BFS, A*, Coloração, Markov, Visão 2D com Produto Escalar e Shaders).
