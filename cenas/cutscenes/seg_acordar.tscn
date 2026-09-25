@@ -1,0 +1,146 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://xirxth2cwt5s" path="res://scripts/cutscenes/cutscene.gd" id="1_cutscene"]
+[ext_resource type="Texture2D" uid="uid://002htxfworvj" path="res://assets/sprites/cutscenes/seg_acordar/seg_acordar_fundo.png" id="2_fundo"]
+[ext_resource type="Texture2D" uid="uid://c4jb8ewxt3nf6" path="res://assets/sprites/cutscenes/seg_acordar/seg_acordar_meio.png" id="3_meio"]
+[ext_resource type="Texture2D" uid="uid://ypx6slpbnpxk" path="res://assets/sprites/cutscenes/seg_acordar/seg_acordar_gabriel.png" id="4_gabriel"]
+[ext_resource type="Texture2D" uid="uid://djfq6je2axuf2" path="res://assets/sprites/cutscenes/seg_acordar/seg_acordar_frente.png" id="5_frente"]
+[ext_resource type="Shader" uid="uid://cb8ygb308rjtx" path="res://shaders/raios_de_sol.gdshader" id="6_raios"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_raios"]
+shader = ExtResource("6_raios")
+shader_parameter/cor = Color(1, 0.9, 0.65, 1)
+shader_parameter/forca = 0.0
+shader_parameter/direcao = Vector2(0.5, 1)
+shader_parameter/origem = Vector2(207, -35)
+shader_parameter/largura = 200.0
+shader_parameter/comprimento = 200.0
+shader_parameter/degraus = 4.0
+shader_parameter/tamanho = Vector2(340, 200)
+
+[sub_resource type="Animation" id="Animation_principal"]
+resource_name = "principal"
+length = 9.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Escuro:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Raios:material:shader_parameter/forca")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8, 3.2, 5.6, 8, 9.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 0.85, 0.65, 0.9, 0.8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Fundo:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 3.2, 6.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [Vector2(-9, -10), Vector2(-10, -10), Vector2(-11, -10)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Meio:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2.4, 4.8, 7.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-8, -10), Vector2(-9, -10), Vector2(-10, -10), Vector2(-11, -10)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Frente:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.2, 2.4, 3.6, 4.8, 6, 7.2, 8.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-6, -10), Vector2(-7, -10), Vector2(-8, -10), Vector2(-9, -10), Vector2(-10, -10), Vector2(-11, -10), Vector2(-12, -10), Vector2(-13, -10)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Meio/Gabriel:frame")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 3.8, 4.5, 5.2, 6.2, 7.4, 8.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 0, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_seg_acordar"]
+_data = {
+&"principal": SubResource("Animation_principal")
+}
+
+[node name="SegAcordar" type="Node2D"]
+script = ExtResource("1_cutscene")
+id = "seg_acordar"
+
+[node name="Fundo" type="Sprite2D" parent="."]
+position = Vector2(-9, -10)
+texture = ExtResource("2_fundo")
+centered = false
+
+[node name="Meio" type="Sprite2D" parent="."]
+position = Vector2(-8, -10)
+texture = ExtResource("3_meio")
+centered = false
+
+[node name="Gabriel" type="Sprite2D" parent="Meio"]
+position = Vector2(119, 100)
+texture = ExtResource("4_gabriel")
+centered = false
+hframes = 8
+
+[node name="Raios" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_raios")
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 330.0
+offset_bottom = 190.0
+mouse_filter = 2
+
+[node name="Frente" type="Sprite2D" parent="."]
+position = Vector2(-6, -10)
+texture = ExtResource("5_frente")
+centered = false
+
+[node name="Escuro" type="ColorRect" parent="."]
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 330.0
+offset_bottom = 190.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_seg_acordar")
+}
