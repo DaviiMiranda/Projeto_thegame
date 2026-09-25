@@ -3,6 +3,9 @@
 [ext_resource type="Script" path="res://scripts/menu_principal.gd" id="1_menu"]
 [ext_resource type="Script" path="res://scripts/camada_paralaxe.gd" id="2_camada"]
 [ext_resource type="Shader" path="res://shaders/tela_crt.gdshader" id="3_crt"]
+[ext_resource type="Texture2D" path="res://assets/sprites/menu/menu_fundo.png" id="4_fundo"]
+[ext_resource type="Texture2D" path="res://assets/sprites/menu/menu_mesa.png" id="5_mesa"]
+[ext_resource type="Texture2D" path="res://assets/sprites/menu/menu_frente.png" id="6_frente"]
 
 [sub_resource type="Gradient" id="Gradient_luz"]
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0)
@@ -39,59 +42,28 @@ Label/colors/font_color = Color(0.7, 0.85, 1, 1)
 
 [node name="MenuPrincipal" type="Node2D"]
 script = ExtResource("1_menu")
+energia_luz = 0.4
+oscilacao_luz = 0.1
 
 [node name="Fundo" type="Node2D" parent="."]
 script = ExtResource("2_camada")
 deslocamento_maximo = 2.0
 
-[node name="Parede" type="ColorRect" parent="Fundo"]
+[node name="Cenario" type="Sprite2D" parent="Fundo"]
 light_mask = 2
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 340.0
-offset_bottom = 200.0
-mouse_filter = 2
-color = Color(0.07, 0.07, 0.09, 1)
-
-[node name="Estante" type="ColorRect" parent="Fundo"]
-light_mask = 2
-offset_left = 16.0
-offset_top = 24.0
-offset_right = 76.0
-offset_bottom = 140.0
-mouse_filter = 2
-color = Color(0.05, 0.05, 0.065, 1)
+position = Vector2(-10, -10)
+texture = ExtResource("4_fundo")
+centered = false
 
 [node name="Mesa" type="Node2D" parent="."]
 script = ExtResource("2_camada")
 deslocamento_maximo = 5.0
 
-[node name="Tampo" type="ColorRect" parent="Mesa"]
+[node name="Cenario" type="Sprite2D" parent="Mesa"]
 light_mask = 2
-offset_left = -20.0
-offset_top = 140.0
-offset_right = 340.0
-offset_bottom = 200.0
-mouse_filter = 2
-color = Color(0.12, 0.09, 0.07, 1)
-
-[node name="Monitor" type="ColorRect" parent="Mesa"]
-light_mask = 2
-offset_left = 78.0
-offset_top = 14.0
-offset_right = 242.0
-offset_bottom = 140.0
-mouse_filter = 2
-color = Color(0.08, 0.08, 0.075, 1)
-
-[node name="Teclado" type="ColorRect" parent="Mesa"]
-light_mask = 2
-offset_left = 112.0
-offset_top = 146.0
-offset_right = 208.0
-offset_bottom = 154.0
-mouse_filter = 2
-color = Color(0.1, 0.1, 0.1, 1)
+position = Vector2(-10, -10)
+texture = ExtResource("5_mesa")
+centered = false
 
 [node name="Tela" type="ColorRect" parent="Mesa"]
 offset_left = 90.0
@@ -147,7 +119,7 @@ mouse_filter = 2
 [node name="Luz" type="PointLight2D" parent="Mesa"]
 position = Vector2(160, 75)
 color = Color(0.45, 0.65, 1, 1)
-energy = 0.9
+energy = 0.4
 range_item_cull_mask = 2
 texture = SubResource("GradientTexture2D_luz")
 texture_scale = 2.4
@@ -156,18 +128,7 @@ texture_scale = 2.4
 script = ExtResource("2_camada")
 deslocamento_maximo = 10.0
 
-[node name="Caneca" type="ColorRect" parent="Frente"]
-offset_left = 262.0
-offset_top = 122.0
-offset_right = 282.0
-offset_bottom = 148.0
-mouse_filter = 2
-color = Color(0.02, 0.02, 0.03, 1)
-
-[node name="Cadeira" type="ColorRect" parent="Frente"]
-offset_left = -20.0
-offset_top = 152.0
-offset_right = 92.0
-offset_bottom = 200.0
-mouse_filter = 2
-color = Color(0.02, 0.02, 0.03, 1)
+[node name="Cenario" type="Sprite2D" parent="Frente"]
+position = Vector2(-10, -10)
+texture = ExtResource("6_frente")
+centered = false
