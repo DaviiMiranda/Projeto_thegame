@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5opmqch30c1h"
-path="res://.godot/imported/biblioteca_carrinho.png-d20e249f5dc1b343d62d3a69bc10fbf3.ctex"
+uid="uid://bbjgdlb1o1pdm"
+path="res://.godot/imported/estante_vazia.png-4e458512898a4316e6010b6198c65b5b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/salas/biblioteca/biblioteca_carrinho.png"
-dest_files=["res://.godot/imported/biblioteca_carrinho.png-d20e249f5dc1b343d62d3a69bc10fbf3.ctex"]
+source_file="res://assets/sprites/cenario/objetos/estante_vazia.png"
+dest_files=["res://.godot/imported/estante_vazia.png-4e458512898a4316e6010b6198c65b5b.ctex"]
 
 [params]
 

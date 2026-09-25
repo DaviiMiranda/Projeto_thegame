@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://do7c664fnfxyc"
-path="res://.godot/imported/biblioteca_mesa_leitura.png-1284ba4cf9b8f6c3e1554f6ea5855feb.ctex"
+uid="uid://bui1vb23nym7o"
+path="res://.godot/imported/arvore.png-edf14c7d7935fe87a4bcdadde5560c06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/salas/biblioteca/biblioteca_mesa_leitura.png"
-dest_files=["res://.godot/imported/biblioteca_mesa_leitura.png-1284ba4cf9b8f6c3e1554f6ea5855feb.ctex"]
+source_file="res://assets/sprites/cenario/objetos/arvore.png"
+dest_files=["res://.godot/imported/arvore.png-edf14c7d7935fe87a4bcdadde5560c06.ctex"]
 
 [params]
 

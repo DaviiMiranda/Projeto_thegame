@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc4556xda2fr6"
-path="res://.godot/imported/biblioteca_cadeira.png-3b3689215173a28cb23fd5b4f51b6a66.ctex"
+uid="uid://do7c664fnfxyc"
+path="res://.godot/imported/mesa_leitura.png-54f3eed1903412033f48b8edfd5a75e3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/salas/biblioteca/biblioteca_cadeira.png"
-dest_files=["res://.godot/imported/biblioteca_cadeira.png-3b3689215173a28cb23fd5b4f51b6a66.ctex"]
+source_file="res://assets/sprites/cenario/objetos/mesa_leitura.png"
+dest_files=["res://.godot/imported/mesa_leitura.png-54f3eed1903412033f48b8edfd5a75e3.ctex"]
 
 [params]
 

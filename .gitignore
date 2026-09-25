@@ -19,3 +19,6 @@ desktop.ini
 
 # Configurações locais do Claude (as compartilhadas ficam em .claude/agents)
 .claude/settings.local.json
+
+# Cache do Python (scripts geradores de arte)
+__pycache__/

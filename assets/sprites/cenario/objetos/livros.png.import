@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b77fvu7mg1vc"
-path="res://.godot/imported/biblioteca_fungo.png-66be55ed932ee9212748b4573ead898a.ctex"
+uid="uid://bc6pvf7x8yr1u"
+path="res://.godot/imported/livros.png-1fd4b8f91b0a7b3e065fac668bb6ba26.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/salas/biblioteca/biblioteca_fungo.png"
-dest_files=["res://.godot/imported/biblioteca_fungo.png-66be55ed932ee9212748b4573ead898a.ctex"]
+source_file="res://assets/sprites/cenario/objetos/livros.png"
+dest_files=["res://.godot/imported/livros.png-1fd4b8f91b0a7b3e065fac668bb6ba26.ctex"]
 
 [params]
 

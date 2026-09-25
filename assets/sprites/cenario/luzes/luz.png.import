@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bc6pvf7x8yr1u"
-path="res://.godot/imported/biblioteca_livros.png-9be638660cafea6b4dc3c4ce25a02a61.ctex"
+uid="uid://dtfpmqdy5b1wa"
+path="res://.godot/imported/luz.png-d5995eed7a2bd870c2d2270d7cb50f1b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/salas/biblioteca/biblioteca_livros.png"
-dest_files=["res://.godot/imported/biblioteca_livros.png-9be638660cafea6b4dc3c4ce25a02a61.ctex"]
+source_file="res://assets/sprites/cenario/luzes/luz.png"
+dest_files=["res://.godot/imported/luz.png-d5995eed7a2bd870c2d2270d7cb50f1b.ctex"]
 
 [params]
 

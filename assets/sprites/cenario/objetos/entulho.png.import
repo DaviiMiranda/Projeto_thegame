@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtfpmqdy5b1wa"
-path="res://.godot/imported/biblioteca_luz.png-29a7a8ea6cade69a5094c286c1f377e0.ctex"
+uid="uid://cyx4bu1ntyk5h"
+path="res://.godot/imported/entulho.png-44fe5d2b7db7023d4e59bdbd65eadbf8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/salas/biblioteca/biblioteca_luz.png"
-dest_files=["res://.godot/imported/biblioteca_luz.png-29a7a8ea6cade69a5094c286c1f377e0.ctex"]
+source_file="res://assets/sprites/cenario/objetos/entulho.png"
+dest_files=["res://.godot/imported/entulho.png-44fe5d2b7db7023d4e59bdbd65eadbf8.ctex"]
 
 [params]
 
