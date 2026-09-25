@@ -1,0 +1,168 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://cenas/salas/modelo_sala.tscn" id="modelo"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/parede_desabada.tscn" id="parede_desabada"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/parede_estante.tscn" id="parede_estante"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/parede_fungos.tscn" id="parede_fungos"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/parede_janela.tscn" id="parede_janela"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/parede_lisa.tscn" id="parede_lisa"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/parede_placa.tscn" id="parede_placa"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/parede_porta.tscn" id="parede_porta"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/parede_rachada.tscn" id="parede_rachada"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/paredes/pilar.tscn" id="pilar"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/chao/chao_areia.tscn" id="chao_areia"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/chao/chao_lajotas.tscn" id="chao_lajotas"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/chao/chao_mato.tscn" id="chao_mato"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/chao/chao_tapete.tscn" id="chao_tapete"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/arvore.tscn" id="o_arvore"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/cadeira.tscn" id="o_cadeira"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/carrinho.tscn" id="o_carrinho"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/entulho.tscn" id="o_entulho"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/estante_caida.tscn" id="o_estante_caida"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/estante_quebrada.tscn" id="o_estante_quebrada"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/estante_vazia.tscn" id="o_estante_vazia"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/fungo.tscn" id="o_fungo"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/livros.tscn" id="o_livros"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/objetos/mesa_leitura.tscn" id="o_mesa_leitura"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/luzes/luz_sol.tscn" id="luz_sol"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/luzes/luz_fria.tscn" id="luz_fria"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/luzes/luz_fungo.tscn" id="luz_fungo"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/efeitos/raios_de_sol.tscn" id="raios_de_sol"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/efeitos/poeira.tscn" id="poeira"]
+
+[node name="SalaExemplo" instance=ExtResource("modelo")]
+id = "sala_exemplo"
+largura = 960
+
+[node name="Parede01" parent="Paredes" instance=ExtResource("parede_janela")]
+position = Vector2(0, 0)
+
+[node name="Parede02" parent="Paredes" instance=ExtResource("parede_lisa")]
+position = Vector2(80, 0)
+
+[node name="Parede03" parent="Paredes" instance=ExtResource("parede_estante")]
+position = Vector2(160, 0)
+
+[node name="Parede04" parent="Paredes" instance=ExtResource("parede_rachada")]
+position = Vector2(240, 0)
+
+[node name="Parede05" parent="Paredes" instance=ExtResource("parede_desabada")]
+position = Vector2(320, 0)
+
+[node name="Parede06" parent="Paredes" instance=ExtResource("parede_desabada")]
+position = Vector2(400, 0)
+
+[node name="Parede07" parent="Paredes" instance=ExtResource("parede_lisa")]
+position = Vector2(480, 0)
+
+[node name="Parede08" parent="Paredes" instance=ExtResource("parede_placa")]
+position = Vector2(560, 0)
+
+[node name="Parede09" parent="Paredes" instance=ExtResource("parede_estante")]
+position = Vector2(640, 0)
+
+[node name="Parede10" parent="Paredes" instance=ExtResource("parede_fungos")]
+position = Vector2(720, 0)
+
+[node name="Parede11" parent="Paredes" instance=ExtResource("parede_rachada")]
+position = Vector2(800, 0)
+
+[node name="Parede12" parent="Paredes" instance=ExtResource("parede_porta")]
+position = Vector2(880, 0)
+
+[node name="PilarEsquerda" parent="Paredes" instance=ExtResource("pilar")]
+position = Vector2(0, 0)
+
+[node name="PilarDireita" parent="Paredes" instance=ExtResource("pilar")]
+position = Vector2(944, 0)
+
+[node name="Chao1" parent="Chao" instance=ExtResource("chao_lajotas")]
+position = Vector2(0, 0)
+
+[node name="Chao2" parent="Chao" instance=ExtResource("chao_lajotas")]
+position = Vector2(128, 0)
+
+[node name="Chao3" parent="Chao" instance=ExtResource("chao_areia")]
+position = Vector2(256, 0)
+
+[node name="Chao4" parent="Chao" instance=ExtResource("chao_mato")]
+position = Vector2(384, 0)
+
+[node name="Chao5" parent="Chao" instance=ExtResource("chao_tapete")]
+position = Vector2(512, 0)
+
+[node name="Chao6" parent="Chao" instance=ExtResource("chao_tapete")]
+position = Vector2(640, 0)
+
+[node name="Chao7" parent="Chao" instance=ExtResource("chao_mato")]
+position = Vector2(768, 0)
+
+[node name="Chao8" parent="Chao" instance=ExtResource("chao_lajotas")]
+position = Vector2(896, 0)
+
+[node name="EstanteVazia" parent="Objetos" instance=ExtResource("o_estante_vazia")]
+position = Vector2(120, 134)
+
+[node name="Cadeira" parent="Objetos" instance=ExtResource("o_cadeira")]
+position = Vector2(196, 150)
+
+[node name="MesaLeitura" parent="Objetos" instance=ExtResource("o_mesa_leitura")]
+position = Vector2(262, 162)
+
+[node name="Arvore" parent="Objetos" instance=ExtResource("o_arvore")]
+position = Vector2(404, 140)
+
+[node name="Entulho" parent="Objetos" instance=ExtResource("o_entulho")]
+position = Vector2(476, 126)
+espelhado = true
+
+[node name="Livros" parent="Objetos" instance=ExtResource("o_livros")]
+position = Vector2(520, 170)
+
+[node name="Carrinho" parent="Objetos" instance=ExtResource("o_carrinho")]
+position = Vector2(600, 146)
+
+[node name="EstanteQuebrada" parent="Objetos" instance=ExtResource("o_estante_quebrada")]
+position = Vector2(700, 134)
+
+[node name="EstanteCaida" parent="Objetos" instance=ExtResource("o_estante_caida")]
+position = Vector2(790, 174)
+
+[node name="Fungo1" parent="Objetos" instance=ExtResource("o_fungo")]
+position = Vector2(836, 166)
+
+[node name="Fungo2" parent="Objetos" instance=ExtResource("o_fungo")]
+position = Vector2(872, 140)
+espelhado = true
+
+[node name="Fungo3" parent="Objetos" instance=ExtResource("o_fungo")]
+position = Vector2(910, 126)
+
+[node name="Raios" parent="Efeitos" instance=ExtResource("raios_de_sol")]
+position = Vector2(300, 0)
+
+[node name="Poeira" parent="Efeitos" instance=ExtResource("poeira")]
+position = Vector2(420, 90)
+
+[node name="Sol" parent="Luzes" instance=ExtResource("luz_sol")]
+position = Vector2(404, 118)
+scale = Vector2(4.6, 3.4)
+energy = 1.3
+
+[node name="SolNoChao" parent="Luzes" instance=ExtResource("luz_sol")]
+position = Vector2(412, 152)
+scale = Vector2(3.2, 1.2)
+energy = 0.7
+
+[node name="Janela" parent="Luzes" instance=ExtResource("luz_fria")]
+position = Vector2(40, 50)
+
+[node name="FungoParede1" parent="Luzes" instance=ExtResource("luz_fungo")]
+position = Vector2(736, 96)
+scale = Vector2(1.6, 1.6)
+energy = 0.6
+
+[node name="FungoParede2" parent="Luzes" instance=ExtResource("luz_fungo")]
+position = Vector2(772, 72)
+scale = Vector2(1.4, 1.4)
+energy = 0.5

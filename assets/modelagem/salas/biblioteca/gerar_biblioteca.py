@@ -17,8 +17,12 @@
 #   biblioteca_fundo.png     parede do fundo, teto quebrado, estantes de parede
 #   biblioteca_chao.png      o chão (a faixa onde o Gabriel anda), raízes, areia
 #   biblioteca_frente.png    primeiro plano: copa da árvore, cipós, entulho
-#   biblioteca_<objeto>.png  cada objeto que o Gabriel contorna (y-sort)
-#   biblioteca_luz.png       textura das luzes (PointLight2D)
+#
+# E, no kit de cenário que qualquer sala pode usar (assets/sprites/cenario/):
+#   objetos/<objeto>.png     cada objeto que o Gabriel contorna (y-sort)
+#   luzes/luz.png            textura das luzes (PointLight2D)
+# As peças modulares (paredes, chão, céu) saem de
+# assets/modelagem/cenario/gerar_kit.py, que reaproveita as funções daqui.
 #
 # ---------------------------------------------------------------------------
 # O ESTILO (FNAF: Into the Pit, adaptado ao nosso GDD)
@@ -65,6 +69,8 @@ sys.dont_write_bytecode = True
 PASTA_SCRIPT = os.path.dirname(os.path.abspath(__file__))
 PASTA_PROJETO = os.path.normpath(os.path.join(PASTA_SCRIPT, "..", "..", "..", ".."))
 PASTA_SAIDA = os.path.join(PASTA_PROJETO, "assets", "sprites", "salas", "biblioteca")
+# Objetos e luz são do kit de cenário: servem para qualquer sala.
+PASTA_KIT = os.path.join(PASTA_PROJETO, "assets", "sprites", "cenario")
 # PREVIA=1 salva a prévia nesta pasta; PREVIA=<pasta> salva nela.
 PREVIA = os.environ.get("PREVIA", "")
 
@@ -287,8 +293,8 @@ class Imagem:
     def espelhar(self):
         self.px = self.px[:, ::-1].copy()
 
-    def salvar(self, nome):
-        caminho = os.path.join(PASTA_SAIDA, nome)
+    def salvar(self, nome, pasta=None):
+        caminho = os.path.join(pasta or PASTA_SAIDA, nome)
         salvar_png(caminho, self.px)
         print("  salvo:", os.path.relpath(caminho, PASTA_PROJETO), f"({self.w}x{self.h})")
 
@@ -1193,13 +1199,13 @@ def main():
     fundo.salvar("biblioteca_fundo.png")
     chao.salvar("biblioteca_chao.png")
     frente.salvar("biblioteca_frente.png")
-    desenhar_luz().salvar("biblioteca_luz.png")
+    desenhar_luz().salvar("luz.png", os.path.join(PASTA_KIT, "luzes"))
 
     sprites = {}
     print("Objetos (offset do Sprite2D no Godot = -pé):")
     for nome, funcao in FUNCOES_OBJETOS.items():
         img, px, py = funcao()
-        img.salvar(f"biblioteca_{nome}.png")
+        img.salvar(f"{nome}.png", os.path.join(PASTA_KIT, "objetos"))
         print(f"    {nome}: pé em ({px}, {py}) -> offset = Vector2({-px}, {-py})")
         sprites[nome] = (img, px, py)
 
@@ -1223,4 +1229,7 @@ def main():
         print("  prévia: previa_biblioteca.png (não commitar)")
 
 
-main()
+# Só desenha quando o arquivo é rodado direto. Assim o gerar_kit.py pode
+# importar as funções daqui sem gerar a Biblioteca de novo.
+if __name__ == "__main__":
+    main()

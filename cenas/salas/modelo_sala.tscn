@@ -1,0 +1,61 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" uid="uid://cbk4hsrp0m71x" path="res://scripts/salas/sala.gd" id="1_sala"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/ceu.tscn" id="2_ceu"]
+[ext_resource type="PackedScene" path="res://cenas/personagens/gabriel.tscn" id="3_gabriel"]
+[ext_resource type="Shader" uid="uid://dkfsu5mqayu3p" path="res://shaders/vinheta.gdshader" id="4_vinheta"]
+[ext_resource type="Script" path="res://scripts/salas/guias_sala.gd" id="5_guias"]
+
+[sub_resource type="ShaderMaterial" id="Vinheta"]
+shader = ExtResource("4_vinheta")
+
+[node name="ModeloSala" type="Node2D"]
+script = ExtResource("1_sala")
+id = "nova_sala"
+
+[node name="Ceu" parent="." instance=ExtResource("2_ceu")]
+
+[node name="Paredes" type="Node2D" parent="."]
+
+[node name="Chao" type="Node2D" parent="."]
+
+[node name="Objetos" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Gabriel" parent="Objetos" instance=ExtResource("3_gabriel")]
+position = Vector2(60, 150)
+
+[node name="Camera2D" type="Camera2D" parent="Objetos/Gabriel"]
+position = Vector2(0, -30)
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+
+[node name="Efeitos" type="Node2D" parent="."]
+
+[node name="Frente" type="Node2D" parent="."]
+
+[node name="Luzes" type="Node2D" parent="."]
+
+[node name="Escuridao" type="CanvasModulate" parent="."]
+color = Color(0.52, 0.54, 0.64, 1)
+
+[node name="Vinheta" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Tela" type="ColorRect" parent="Vinheta"]
+material = SubResource("Vinheta")
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+
+[node name="Transicao" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="Escuro" type="ColorRect" parent="Transicao"]
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Guias" type="Node2D" parent="."]
+script = ExtResource("5_guias")

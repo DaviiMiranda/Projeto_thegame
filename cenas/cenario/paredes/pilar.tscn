@@ -1,0 +1,7 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://83i8725pi68v" path="res://assets/sprites/cenario/paredes/pilar.png" id="1_peca"]
+
+[node name="Pilar" type="Sprite2D"]
+texture = ExtResource("1_peca")
+centered = false

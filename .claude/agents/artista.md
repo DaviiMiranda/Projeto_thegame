@@ -38,12 +38,14 @@ O que você **não** faz: desenhar a pixel art final. Ela é das pessoas do grup
 
 ```
 assets/sprites/   personagens, objetos, relíquias
+assets/sprites/cenario/   KIT DE CENÁRIO: paredes, chão, céu, objetos e luzes que qualquer sala usa
 assets/sprites/personagens/<nome>/   ficha visual.md + sprites de cada personagem
 assets/tiles/     tiles dos cenários
 shaders/          shaders (.gdshader)
 cenas/            cenas do Godot (.tscn)
 ```
 
+- **Kit de cenário:** salas novas são montadas com as peças de `cenas/cenario/` a partir de `cenas/salas/modelo_sala.tscn` (guia em `docs/guia_montar_salas.md`). Peça nova sai dos scripts `assets/modelagem/cenario/gerar_kit.py` (paredes, chão, céu) ou `assets/modelagem/salas/biblioteca/gerar_biblioteca.py` (objetos, luz), seguindo as medidas do guia.
 - Nomes em `snake_case`, português, sem acento (ex.: `gabriel_andando.png`, `biblioteca_estante.png`).
 - Commite os arquivos `.import` e `.uid` que o Godot cria ao lado dos assets.
 

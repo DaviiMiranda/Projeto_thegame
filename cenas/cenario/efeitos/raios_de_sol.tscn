@@ -1,0 +1,21 @@
+[gd_scene format=3]
+
+[ext_resource type="Shader" uid="uid://cb8ygb308rjtx" path="res://shaders/raios_de_sol.gdshader" id="1_raios"]
+
+[sub_resource type="ShaderMaterial" id="Raios"]
+resource_local_to_scene = true
+shader = ExtResource("1_raios")
+shader_parameter/cor = Color(1, 0.88, 0.62, 1)
+shader_parameter/forca = 1.2
+shader_parameter/direcao = Vector2(0.5, 1)
+shader_parameter/origem = Vector2(100, -8)
+shader_parameter/largura = 200.0
+shader_parameter/comprimento = 200.0
+shader_parameter/degraus = 4.0
+shader_parameter/tamanho = Vector2(320, 180)
+
+[node name="RaiosDeSol" type="ColorRect"]
+material = SubResource("Raios")
+offset_right = 320.0
+offset_bottom = 180.0
+mouse_filter = 2

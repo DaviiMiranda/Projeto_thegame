@@ -1,0 +1,9 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" uid="uid://dtfpmqdy5b1wa" path="res://assets/sprites/cenario/luzes/luz.png" id="1_luz"]
+
+[node name="LuzSol" type="PointLight2D"]
+scale = Vector2(3, 3)
+color = Color(1, 0.84, 0.6, 1)
+energy = 1.2
+texture = ExtResource("1_luz")

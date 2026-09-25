@@ -25,6 +25,7 @@ docs/
 ├── equipe.md                      # Papéis da equipe e entregas acadêmicas
 ├── fases.md                       # Ponto de entrada para o design de fases
 ├── gdd.md                         # GDD executivo integrado
+├── guia_montar_salas.md           # Como montar uma sala com o kit de cenário (passo a passo)
 │
 ├── visao_geral/                   # Pilares conceituais, escopo e identidade
 │   ├── conceito.md                # Premissa, público-alvo, escopo e pilares de design
