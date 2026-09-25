@@ -17,4 +17,4 @@ A cena `cenas/cutscenes/seg_acordar.tscn` já existe, com uma animação **provi
 - o Gabriel usa os 8 quadros de `seg_acordar_gabriel.png`: dorme, respira, se mexe, se ergue, senta, olha para cima, para a esquerda e para a direita.
 
 Quando as falas e o "o que o jogador descobre" estiverem escritos, a animação `principal` é refeita em cima deles (tempo das falas, ordem dos olhares).
-A `proxima_cena` está vazia porque a primeira sala ainda não existe: a cutscene termina e fica parada no último quadro. O "Novo jogo" do menu já abre esta cena.
+O "Novo jogo" do menu abre esta cena, e ao terminar (ou ao apertar Esc) ela passa para a primeira sala, a Biblioteca (`cenas/salas/biblioteca.tscn`).
