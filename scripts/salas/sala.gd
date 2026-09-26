@@ -28,6 +28,13 @@ extends Node2D
 	set(valor):
 		largura = valor
 		_redesenhar_guias()
+## Altura da sala em pixels. Uma tela tem 180. Se passar disso, a câmera
+## também anda na vertical e o chão ganha mais profundidade para a frente
+## (ex.: a Biblioteca tem 300).
+@export var altura: int = 180:
+	set(valor):
+		altura = valor
+		_redesenhar_guias()
 ## Linha mais ao fundo onde os pés do Gabriel podem ir (y, em pixels).
 ## As peças de parede do kit acabam em y = 112.
 @export var chao_fundo: int = 120:
@@ -46,8 +53,6 @@ extends Node2D
 		_redesenhar_guias()
 ## Desligue se a sala tiver um nó "Limites" feito à mão.
 @export var criar_limites: bool = true
-
-const ALTURA := 180
 
 ## Retângulo preto por cima de tudo, dentro de um CanvasLayer (opcional).
 @onready var escuro: ColorRect = get_node_or_null("Transicao/Escuro")
@@ -76,8 +81,8 @@ func _criar_limites() -> void:
 	var paredes := [
 		[Vector2(larg / 2, chao_fundo - grossura / 2), Vector2(larg + 2 * grossura, grossura)],
 		[Vector2(larg / 2, chao_frente + grossura / 2), Vector2(larg + 2 * grossura, grossura)],
-		[Vector2(margem_lados - grossura / 2, ALTURA / 2.0), Vector2(grossura, ALTURA * 2)],
-		[Vector2(larg - margem_lados + grossura / 2, ALTURA / 2.0), Vector2(grossura, ALTURA * 2)],
+		[Vector2(margem_lados - grossura / 2, altura / 2.0), Vector2(grossura, altura * 2)],
+		[Vector2(larg - margem_lados + grossura / 2, altura / 2.0), Vector2(grossura, altura * 2)],
 	]
 	for p in paredes:
 		var forma := CollisionShape2D.new()
@@ -96,7 +101,7 @@ func _ajustar_camera() -> void:
 		camera.limit_left = 0
 		camera.limit_top = 0
 		camera.limit_right = largura
-		camera.limit_bottom = ALTURA
+		camera.limit_bottom = altura
 
 
 func _redesenhar_guias() -> void:
