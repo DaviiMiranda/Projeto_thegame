@@ -23,6 +23,7 @@ Este arquivo dá contexto a qualquer sessão do Claude que trabalhe neste reposi
 ```
 cenas/          cenas do Godot (.tscn) — uma cena por sistema/sala/personagem
 scripts/        GDScript (.gd)
+dados/          recursos de dados (.tres), ex.: dados/itens/ — um arquivo por item
 shaders/        shaders (.gdshader)
 assets/         sprites, tiles, audio, fontes
 docs/           gdd.md, equipe.md, decisoes.md
