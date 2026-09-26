@@ -24,6 +24,7 @@ A sala é vista de lado, mas o chão tem profundidade (2.5D). O Gabriel anda par
 ```
 
 - A tela do jogo tem **320 × 180** pixels. Uma sala tem 180 de altura e a largura que você quiser (use múltiplos de 80).
+- A sala pode ser **mais alta que a tela**, para o chão ter mais profundidade para a frente: aí a câmera anda também na vertical. A Biblioteca tem 300 de altura. As paredes continuam acabando em y = 112; o que cresce é o chão.
 - **Quem está mais embaixo na tela aparece na frente.** O Godot faz isso sozinho no nó `Objetos` (y-sort), pelo **pé** de cada coisa. Por isso todo objeto do kit tem a origem no pé.
 - **Só os pés colidem.** Cada objeto tem uma "pegada", um retângulo baixo no chão. O Gabriel pode passar com a cabeça na frente de uma estante, mas os pés dele esbarram na base dela.
 
@@ -38,6 +39,7 @@ A sala é vista de lado, mas o chão tem profundidade (2.5D). O Gabriel anda par
 |---|---|
 | `id` | nome da sala no grafo do campus, igual ao nome do arquivo (ex.: `bloco_d_corredor`) |
 | `largura` | largura da sala em pixels, múltiplo de 80 (960 = 3 telas) |
+| `altura` | altura da sala em pixels (padrão: 180, uma tela). Mais que isso dá mais chão para a frente; aumente o `chao_frente` junto |
 | `chao_fundo` / `chao_frente` | até onde os pés do Gabriel vão, para o fundo e para a frente (padrão: 120 e 176) |
 | `margem_lados` | quanto o Gabriel para antes da parede da esquerda e da direita |
 
