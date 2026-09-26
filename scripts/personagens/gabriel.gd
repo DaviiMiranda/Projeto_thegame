@@ -33,6 +33,15 @@ extends CharacterBody2D
 ## Quantas vezes mais devagar agachado (docs/mecanicas: 50%).
 @export var multiplicador_agachar: float = 0.5
 
+@export_group("Sprites")
+## Uma imagem para cada direção em que ele anda (geradas por
+## assets/modelagem/personagens/gerar_gabriel.py). Lado e 3/4 olham para a
+## direita; para a esquerda, o sprite é espelhado.
+@export var sprite_lado: Texture2D
+@export var sprite_frente: Texture2D
+@export var sprite_tres_quartos: Texture2D
+@export var sprite_costas: Texture2D
+
 ## Verdadeiro enquanto o jogador segura a tecla de agachar.
 var agachado := false
 ## Verdadeiro enquanto ele está correndo (e se mexendo). O papel 2 vai usar
@@ -71,10 +80,30 @@ func _physics_process(_delta: float) -> void:
 	# em vez de parar seco (é o que deixa ele "raspar" na estante).
 	move_and_slide()
 
-	# O sprite olha para a direita; espelha quando anda para a esquerda.
-	# Andando só para cima/baixo, ele continua olhando para o último lado.
-	if direcao.x != 0.0:
-		sprite.flip_h = direcao.x < 0.0
+	_virar_sprite(direcao)
 
 	# Provisório até existir o sprite agachado: achata o desenho.
 	sprite.scale.y = 0.75 if agachado else 1.0
+
+
+## Escolhe a vista do Gabriel pela direção em que ele anda:
+##   para a frente (S) -> de frente     para o fundo (W) -> de costas
+##   para os lados     -> de lado       diagonal para a frente -> 3/4
+## Na diagonal para o fundo ele fica de lado (não temos 3/4 de costas).
+## Parado, ele continua virado para onde estava.
+func _virar_sprite(direcao: Vector2) -> void:
+	if direcao == Vector2.ZERO:
+		return
+	var textura: Texture2D
+	if direcao.x == 0.0:
+		textura = sprite_frente if direcao.y > 0.0 else sprite_costas
+	elif direcao.y > 0.0:
+		textura = sprite_tres_quartos
+	else:
+		textura = sprite_lado
+	if textura:
+		sprite.texture = textura
+	# Lado e 3/4 olham para a direita; espelha quando anda para a esquerda.
+	# Andando só para a frente/fundo, fica espelhado como estava.
+	if direcao.x != 0.0:
+		sprite.flip_h = direcao.x < 0.0

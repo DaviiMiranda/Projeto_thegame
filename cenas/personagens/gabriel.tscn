@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/personagens/gabriel.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://q2tk3txuqidy" path="res://assets/sprites/personagens/gabriel/gabriel_lado.png" id="2_sprite"]
+[ext_resource type="Texture2D" uid="uid://dalgjayecjuws" path="res://assets/sprites/personagens/gabriel/gabriel_frente.png" id="3_frente"]
+[ext_resource type="Texture2D" uid="uid://cibhrwpnun6yk" path="res://assets/sprites/personagens/gabriel/gabriel_tres_quartos.png" id="4_tres_quartos"]
+[ext_resource type="Texture2D" uid="uid://dso2bjj18huw" path="res://assets/sprites/personagens/gabriel/gabriel_costas.png" id="5_costas"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pes"]
 size = Vector2(12, 4)
@@ -9,6 +12,10 @@ size = Vector2(12, 4)
 [node name="Gabriel" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_script")
+sprite_lado = ExtResource("2_sprite")
+sprite_frente = ExtResource("3_frente")
+sprite_tres_quartos = ExtResource("4_tres_quartos")
+sprite_costas = ExtResource("5_costas")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_sprite")
