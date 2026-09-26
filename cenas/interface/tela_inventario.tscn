@@ -4,13 +4,13 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/interface/painel.png" id="2_painel"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_titulo"]
-font_size = 10
+font_size = 8
 font_color = Color(0.95, 0.88, 0.7, 1)
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nome"]
-font_size = 10
+font_size = 8
 font_color = Color(0.64, 0.9, 0.85, 1)
 shadow_color = Color(0, 0, 0, 1)
 shadow_offset = Vector2(1, 1)

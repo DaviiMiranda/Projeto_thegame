@@ -17,7 +17,7 @@ content_margin_bottom = 1.0
 bg_color = Color(0, 0, 0, 0.6)
 
 [sub_resource type="Theme" id="Theme_pular"]
-default_font_size = 10
+default_font_size = 8
 Button/colors/font_color = Color(0.9, 0.84, 0.7, 0.8)
 Button/colors/font_hover_color = Color(1, 0.95, 0.82, 1)
 Button/colors/font_pressed_color = Color(1, 1, 1, 1)
