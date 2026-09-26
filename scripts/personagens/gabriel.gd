@@ -35,12 +35,13 @@ extends CharacterBody2D
 
 @export_group("Sprites")
 ## Uma imagem para cada direção em que ele anda (geradas por
-## assets/modelagem/personagens/gerar_gabriel.py). Lado e 3/4 olham para a
-## direita; para a esquerda, o sprite é espelhado.
+## assets/modelagem/personagens/gerar_gabriel.py). Lado e os dois 3/4 olham
+## para a direita; para a esquerda, o sprite é espelhado.
 @export var sprite_lado: Texture2D
 @export var sprite_frente: Texture2D
 @export var sprite_tres_quartos: Texture2D
 @export var sprite_costas: Texture2D
+@export var sprite_tres_quartos_costas: Texture2D
 
 @export_group("Caminhada")
 ## Tiras com os quadros da caminhada, lado a lado, uma para cada vista.
@@ -48,6 +49,7 @@ extends CharacterBody2D
 @export var andar_frente: Texture2D
 @export var andar_tres_quartos: Texture2D
 @export var andar_costas: Texture2D
+@export var andar_tres_quartos_costas: Texture2D
 ## Quantos quadros cada tira tem.
 @export var quadros_andar: int = 12
 ## Quantos pixels ele anda a cada quadro da caminhada. O quadro avança pela
@@ -63,6 +65,7 @@ extends CharacterBody2D
 @export var parado_frente: Texture2D
 @export var parado_tres_quartos: Texture2D
 @export var parado_costas: Texture2D
+@export var parado_tres_quartos_costas: Texture2D
 ## Quantos quadros cada tira tem.
 @export var quadros_parado: int = 8
 ## Quanto tempo cada quadro da respiração fica na tela. Parado, não há
@@ -76,7 +79,8 @@ var agachado := false
 ## isso para a estamina e o barulho dos passos.
 var correndo := false
 
-## Para qual lado ele está virado: "lado", "frente", "tres_quartos" ou "costas".
+## Para qual lado ele está virado: "lado", "frente", "tres_quartos", "costas"
+## ou "tres_quartos_costas".
 var vista := "lado"
 ## Distância andada desde que começou a andar (escolhe o quadro).
 var _distancia := 0.0
@@ -126,8 +130,8 @@ func _physics_process(delta: float) -> void:
 
 ## Escolhe a vista do Gabriel pela direção em que ele anda:
 ##   para a frente (S) -> de frente     para o fundo (W) -> de costas
-##   para os lados     -> de lado       diagonal para a frente -> 3/4
-## Na diagonal para o fundo ele fica de lado (não temos 3/4 de costas).
+##   para os lados     -> de lado
+##   diagonal para a frente -> 3/4      diagonal para o fundo -> 3/4 de costas
 ## Parado, ele continua virado para onde estava.
 func _virar(direcao: Vector2) -> void:
 	if direcao == Vector2.ZERO:
@@ -136,6 +140,8 @@ func _virar(direcao: Vector2) -> void:
 		vista = "frente" if direcao.y > 0.0 else "costas"
 	elif direcao.y > 0.0:
 		vista = "tres_quartos"
+	elif direcao.y < 0.0:
+		vista = "tres_quartos_costas"
 	else:
 		vista = "lado"
 	# Lado e 3/4 olham para a direita; espelha quando anda para a esquerda.
@@ -149,11 +155,14 @@ func _virar(direcao: Vector2) -> void:
 ## que corresponde ao tempo parado. Se faltar uma tira, usa o sprite parado.
 func _animar(andou: float, delta: float) -> void:
 	var andando := {"lado": andar_lado, "frente": andar_frente,
-			"tres_quartos": andar_tres_quartos, "costas": andar_costas}
+			"tres_quartos": andar_tres_quartos, "costas": andar_costas,
+			"tres_quartos_costas": andar_tres_quartos_costas}
 	var respirando := {"lado": parado_lado, "frente": parado_frente,
-			"tres_quartos": parado_tres_quartos, "costas": parado_costas}
+			"tres_quartos": parado_tres_quartos, "costas": parado_costas,
+			"tres_quartos_costas": parado_tres_quartos_costas}
 	var imovel := {"lado": sprite_lado, "frente": sprite_frente,
-			"tres_quartos": sprite_tres_quartos, "costas": sprite_costas}
+			"tres_quartos": sprite_tres_quartos, "costas": sprite_costas,
+			"tres_quartos_costas": sprite_tres_quartos_costas}
 	if andou > 0.01 and andando[vista]:
 		_tempo_parado = 0.0
 		_distancia += andou
