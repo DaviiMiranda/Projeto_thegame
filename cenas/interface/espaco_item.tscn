@@ -1,0 +1,52 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/interface/espaco_item.gd" id="1_espaco"]
+[ext_resource type="Texture2D" path="res://assets/sprites/interface/espaco.png" id="2_moldura"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_numero"]
+font_size = 8
+font_color = Color(0.95, 0.88, 0.7, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1, 1)
+
+[node name="EspacoItem" type="Control"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 20.0
+offset_bottom = 20.0
+mouse_filter = 0
+script = ExtResource("1_espaco")
+
+[node name="Moldura" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 20.0
+offset_bottom = 20.0
+mouse_filter = 2
+texture = ExtResource("2_moldura")
+
+[node name="Icone" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 18.0
+offset_bottom = 18.0
+mouse_filter = 2
+
+[node name="Carga" type="ColorRect" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 2.0
+offset_top = 17.0
+offset_right = 18.0
+offset_bottom = 18.0
+mouse_filter = 2
+color = Color(0.39, 0.86, 0.79, 1)
+
+[node name="Numero" type="Label" parent="."]
+layout_mode = 0
+offset_left = 2.0
+offset_top = -1.0
+offset_right = 10.0
+offset_bottom = 10.0
+label_settings = SubResource("LabelSettings_numero")

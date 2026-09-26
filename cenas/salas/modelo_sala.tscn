@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" path="res://cenas/personagens/gabriel.tscn" id="3_gabriel"]
 [ext_resource type="Shader" uid="uid://dkfsu5mqayu3p" path="res://shaders/vinheta.gdshader" id="4_vinheta"]
 [ext_resource type="Script" path="res://scripts/salas/guias_sala.gd" id="5_guias"]
+[ext_resource type="PackedScene" path="res://cenas/interface/hud.tscn" id="i_hud"]
+[ext_resource type="PackedScene" path="res://cenas/interface/tela_inventario.tscn" id="i_inventario"]
 
 [sub_resource type="ShaderMaterial" id="Vinheta"]
 shader = ExtResource("4_vinheta")
@@ -56,6 +58,10 @@ offset_right = 320.0
 offset_bottom = 180.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="Hud" parent="." instance=ExtResource("i_hud")]
+
+[node name="TelaInventario" parent="." instance=ExtResource("i_inventario")]
 
 [node name="Guias" type="Node2D" parent="."]
 script = ExtResource("5_guias")

@@ -16,6 +16,7 @@ Este arquivo dá contexto a qualquer sessão do Claude que trabalhe neste reposi
 
 - **Godot 4.7.x**, **GDScript**, 2D.
 - Resolução base 320×180, escala inteira, filtro de textura *Nearest* (pixel art).
+- Fonte: **Tiny5** (pixelada), padrão do jogo pelo tema `cenas/interface/tema_jogo.tres`. Só nos tamanhos **8** ou **16**: em outros tamanhos a letra deforma. Detalhes em `assets/fontes/creditos.md`.
 - Sem assets pagos. Placeholders gerados no próprio Godot até a arte ficar pronta.
 
 ## Estrutura
@@ -23,6 +24,7 @@ Este arquivo dá contexto a qualquer sessão do Claude que trabalhe neste reposi
 ```
 cenas/          cenas do Godot (.tscn) — uma cena por sistema/sala/personagem
 scripts/        GDScript (.gd)
+dados/          recursos de dados (.tres), ex.: dados/itens/ — um arquivo por item
 shaders/        shaders (.gdshader)
 assets/         sprites, tiles, audio, fontes
 docs/           gdd.md, equipe.md, decisoes.md

@@ -47,3 +47,6 @@ offset = Vector2(-23, -54)
 [node name="Pes" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_pes")
+
+[node name="Gadgets" type="Node2D" parent="."]
+position = Vector2(0, -24)

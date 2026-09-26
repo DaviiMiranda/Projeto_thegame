@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" format=3]
+
+[ext_resource type="Script" path="res://scripts/itens/item.gd" id="1_item"]
+[ext_resource type="Texture2D" path="res://assets/sprites/itens/pote_fungos.png" id="2_icone"]
+[ext_resource type="Texture2D" path="res://assets/sprites/itens/pote_fungos_chao.png" id="3_chao"]
+[ext_resource type="PackedScene" path="res://cenas/itens/pote_fungos.tscn" id="4_gadget"]
+
+[resource]
+script = ExtResource("1_item")
+id = "pote_fungos"
+nome = "Pote de fungos"
+descricao = "Pote de conserva com fungos que brilham. Destampado, ilumina em volta, mas a luz chama atenção. Recarregue numa colônia de fungos."
+icone = ExtResource("2_icone")
+sprite_chao = ExtResource("3_chao")
+equipavel = true
+cena_gadget = ExtResource("4_gadget")

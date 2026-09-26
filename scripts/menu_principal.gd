@@ -57,6 +57,9 @@ func _process(delta: float) -> void:
 
 func _ao_apertar_novo_jogo() -> void:
 	novo_jogo_pedido.emit()
+	# Jogo novo começa de mãos vazias (o inventário é um autoload e continuaria
+	# com os itens de uma partida anterior).
+	Inventario.limpar()
 	if cena_novo_jogo:
 		get_tree().change_scene_to_packed(cena_novo_jogo)
 	else:

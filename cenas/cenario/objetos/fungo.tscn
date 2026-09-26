@@ -3,6 +3,10 @@
 [ext_resource type="Script" uid="uid://kj31b6jbiwy2" path="res://scripts/cenario/objeto_cenario.gd" id="1_objeto"]
 [ext_resource type="Texture2D" uid="uid://b77fvu7mg1vc" path="res://assets/sprites/cenario/objetos/fungo.png" id="2_sprite"]
 [ext_resource type="PackedScene" path="res://cenas/cenario/luzes/luz_fungo.tscn" id="3_luz"]
+[ext_resource type="Script" path="res://scripts/cenario/colonia_fungos.gd" id="4_colonia"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_colonia"]
+radius = 14.0
 
 
 [node name="Fungo" type="StaticBody2D"]
@@ -15,3 +19,11 @@ offset = Vector2(-8, -11)
 
 [node name="LuzFungo" parent="." instance=ExtResource("3_luz")]
 position = Vector2(0, -4)
+
+[node name="Colonia" type="Area2D" parent="."]
+script = ExtResource("4_colonia")
+altura_aviso = 16.0
+
+[node name="Alcance" type="CollisionShape2D" parent="Colonia"]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_colonia")
