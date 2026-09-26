@@ -9,6 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://bfnasxidop1h3" path="res://assets/sprites/personagens/gabriel/gabriel_andar_frente.png" id="7_andar_frente"]
 [ext_resource type="Texture2D" uid="uid://cd2soanlsrjhh" path="res://assets/sprites/personagens/gabriel/gabriel_andar_tres_quartos.png" id="8_andar_tres_quartos"]
 [ext_resource type="Texture2D" uid="uid://bih57v0igrnp5" path="res://assets/sprites/personagens/gabriel/gabriel_andar_costas.png" id="9_andar_costas"]
+[ext_resource type="Texture2D" uid="uid://cn5tyft515m1x" path="res://assets/sprites/personagens/gabriel/gabriel_parado_lado.png" id="10_parado_lado"]
+[ext_resource type="Texture2D" uid="uid://b8lm78tv55lsa" path="res://assets/sprites/personagens/gabriel/gabriel_parado_frente.png" id="11_parado_frente"]
+[ext_resource type="Texture2D" uid="uid://d2o7t6jwbpugu" path="res://assets/sprites/personagens/gabriel/gabriel_parado_tres_quartos.png" id="12_parado_tres_quartos"]
+[ext_resource type="Texture2D" uid="uid://b4fpppadm7xhl" path="res://assets/sprites/personagens/gabriel/gabriel_parado_costas.png" id="13_parado_costas"]
+[ext_resource type="Texture2D" uid="uid://c34ncdvdmx15p" path="res://assets/sprites/personagens/gabriel/gabriel_tres_quartos_costas.png" id="14_tres_quartos_costas"]
+[ext_resource type="Texture2D" uid="uid://byonomx3llekp" path="res://assets/sprites/personagens/gabriel/gabriel_andar_tres_quartos_costas.png" id="15_andar_tres_quartos_costas"]
+[ext_resource type="Texture2D" uid="uid://c4r4wpja27qd1" path="res://assets/sprites/personagens/gabriel/gabriel_parado_tres_quartos_costas.png" id="16_parado_tres_quartos_costas"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pes"]
 size = Vector2(12, 4)
@@ -20,10 +27,17 @@ sprite_lado = ExtResource("2_sprite")
 sprite_frente = ExtResource("3_frente")
 sprite_tres_quartos = ExtResource("4_tres_quartos")
 sprite_costas = ExtResource("5_costas")
+sprite_tres_quartos_costas = ExtResource("14_tres_quartos_costas")
 andar_lado = ExtResource("6_andar_lado")
 andar_frente = ExtResource("7_andar_frente")
 andar_tres_quartos = ExtResource("8_andar_tres_quartos")
 andar_costas = ExtResource("9_andar_costas")
+andar_tres_quartos_costas = ExtResource("15_andar_tres_quartos_costas")
+parado_lado = ExtResource("10_parado_lado")
+parado_frente = ExtResource("11_parado_frente")
+parado_tres_quartos = ExtResource("12_parado_tres_quartos")
+parado_costas = ExtResource("13_parado_costas")
+parado_tres_quartos_costas = ExtResource("16_parado_tres_quartos_costas")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_sprite")
