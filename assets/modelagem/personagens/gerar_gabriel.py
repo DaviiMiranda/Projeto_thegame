@@ -10,8 +10,9 @@
 #   assets/sprites/personagens/gabriel/gabriel_frente.png        de lado (olhando para a direita),
 #   assets/sprites/personagens/gabriel/gabriel_tres_quartos.png  de frente, de 3/4 (virado para a
 #   assets/sprites/personagens/gabriel/gabriel_costas.png        direita) e de costas
-#   assets/sprites/personagens/gabriel/gabriel_andar_<vista>.png  caminhada: 6 quadros de 48 x 56
-#                                                                lado a lado, um arquivo por vista
+#   assets/sprites/personagens/gabriel/gabriel_andar_<vista>.png   caminhada: 12 quadros de 48 x 56
+#                                                                 lado a lado, um arquivo por vista
+#   assets/sprites/personagens/gabriel/gabriel_parado_<vista>.png  parado respirando: 8 quadros
 #   assets/sprites/personagens/gabriel/gabriel_referencia.png  frente, 3/4, lado e costas, 128 px
 #   assets/modelagem/personagens/gabriel.blend                 o modelo, para abrir e mexer
 #
@@ -45,7 +46,8 @@ ARQUIVO_BLEND = os.path.join(c.PASTA_SCRIPT, "gabriel.blend")
 MAX_CORES = 32   # tamanho máximo da paleta do Gabriel
 # Vistas dos sprites de jogo: (nome, giro do modelo em graus).
 VISTAS_JOGO = (("lado", 90), ("frente", 0), ("tres_quartos", 35), ("costas", 180))
-QUADROS_ANDAR = 6   # quadros do ciclo de caminhada (dois passos)
+QUADROS_ANDAR = 12   # quadros do ciclo de caminhada (dois passos)
+QUADROS_PARADO = 8   # quadros do ciclo de respiração
 
 
 def criar_materiais():
@@ -153,7 +155,8 @@ def montar(mt):
 #   quadril desce um pouco quando as pernas estão abertas (sen² φ = 1):
 #            é o "sobe e desce" que dá peso ao andar
 #
-# Com 6 quadros, cada quadro avança 60° na fase.
+# Com 12 quadros, cada quadro avança 30° na fase. Mais quadros = passagem
+# mais suave de uma pose para a outra (com 6, cada quadro pulava 60°).
 
 AMPLITUDE_COXA = 22       # graus
 AMPLITUDE_JOELHO = 55   # bem dobrado: de frente e de costas, é o pé subindo que mostra o passo
@@ -199,6 +202,36 @@ def pose_andar(parado, fase):
     bpy.data.objects["Quadril"].location = (pos[0], pos[1], pos[2] - subida)
 
 
+# ---------------------------------------------------------------------------
+# Parado (respirando)
+# ---------------------------------------------------------------------------
+#
+# Parado, o Gabriel respira devagar e cansado. Num sprite de 48 px, o menor
+# movimento visível é 1 pixel, então a respiração é o tronco inteiro (com a
+# cabeça e os braços) subindo 1 px ao puxar o ar, com as pernas paradas no
+# chão. A cabeça pende um pouco e volta, atrasada em relação ao peito.
+#
+#   subida = SUBIDA_PEITO · (1 - cos φ) / 2     vai de 0 (fase 0) a 1 px (180°)
+#
+# Na fase 0 a subida é zero: o primeiro quadro é igual ao sprite parado.
+
+SUBIDA_PEITO = 0.037      # metros: 1 px no sprite de jogo
+BALANCO_CABECA = 3        # graus
+
+
+def pose_parado(parado, fase):
+    """Pose da respiração para a fase dada (em graus)."""
+    phi = math.radians(fase)
+    rot, pos = parado["Tronco"]
+    subida = SUBIDA_PEITO * (1 - math.cos(phi)) / 2
+    bpy.data.objects["Tronco"].location = (pos[0], pos[1], pos[2] + subida)
+    rot, _ = parado["Cabeca"]
+    # Atrasada 60° em relação ao peito: primeiro o peito sobe, depois a
+    # cabeça acompanha. É esse atraso que faz parecer um corpo, não um bloco.
+    pende = BALANCO_CABECA * (1 - math.cos(phi - math.radians(60))) / 2
+    bpy.data.objects["Cabeca"].rotation_euler = (rot[0] + math.radians(pende), rot[1], rot[2])
+
+
 def main():
     c.cena_vazia()
     materiais, mt = criar_materiais()
@@ -231,6 +264,16 @@ def main():
         print(f"[gabriel] andar: quadro {q + 1}/{QUADROS_ANDAR}")
     restaurar_pose(parado)
 
+    # Parado respirando: QUADROS_PARADO poses em cada vista.
+    respirar = {nome: [] for nome, _ in VISTAS_JOGO}
+    for q in range(QUADROS_PARADO):
+        pose_parado(parado, 360 * q / QUADROS_PARADO)
+        for nome, angulo in VISTAS_JOGO:
+            img, ind, _ = c.renderizar_vista(cam, raiz, materiais, angulo, c.QUADRO_JOGO, c.PX_POR_M_JOGO, c.PE_JOGO_PX)
+            respirar[nome].append(c.contorno(img, ind, materiais))
+        print(f"[gabriel] parado: quadro {q + 1}/{QUADROS_PARADO}")
+    restaurar_pose(parado)
+
     # Folha de referência: frente, 3/4, lado e costas, em 128 px.
     vistas = []
     for angulo in (0, 35, 90, 180):
@@ -248,6 +291,9 @@ def main():
     for nome, quadros in andar.items():
         tira = np.concatenate(c.aplicar_paleta(quadros, paleta), axis=1)
         c.salvar_png(tira, os.path.join(PASTA_SAIDA, f"gabriel_andar_{nome}.png"))
+    for nome, quadros in respirar.items():
+        tira = np.concatenate(c.aplicar_paleta(quadros, paleta), axis=1)
+        c.salvar_png(tira, os.path.join(PASTA_SAIDA, f"gabriel_parado_{nome}.png"))
     c.salvar_png(c.montar_folha([vistas]), os.path.join(PASTA_SAIDA, "gabriel_referencia.png"))
     print("[gabriel] paleta:", " ".join(c.rgb_para_hex(np.array(cor) / 255) for cor in paleta))
 
