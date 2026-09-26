@@ -80,7 +80,9 @@ PREVIA = os.environ.get("PREVIA", "")
 # ---------------------------------------------------------------------------
 
 LARGURA_SALA = 960        # 3 telas de 320
-ALTURA_SALA = 180         # 1 tela de altura (a câmera só anda na horizontal)
+ALTURA_TELA = 180         # altura de uma tela do jogo
+ALTURA_SALA = 300         # a parte sul (a frente do chão) passa da tela:
+                          # a câmera também anda na vertical
 Y_CHAO = 112              # linha onde a parede encontra o chão
 PARALAXE_CEU = 0.5        # o céu anda na metade da velocidade da câmera
 # O céu precisa cobrir a tela quando a câmera está no fim da sala:
@@ -110,6 +112,22 @@ OBJETOS = [
     ("fungo", 758, 168, False),
     ("fungo", 846, 140, True),
     ("fungo", 912, 124, False),
+    # Parte sul (a frente da sala, abaixo da primeira tela).
+    ("mesa_leitura", 170, 232, False),
+    ("cadeira", 116, 246, False),
+    ("cadeira", 228, 214, True),
+    ("entulho", 404, 212, False),
+    ("livros", 340, 264, False),
+    ("estante_vazia", 560, 208, False),
+    ("estante_quebrada", 640, 246, True),
+    ("carrinho", 520, 282, True),
+    ("livros", 604, 290, True),
+    ("estante_caida", 744, 226, True),
+    ("cabine", 860, 272, True),
+    ("entulho", 72, 288, True),
+    ("fungo", 800, 262, False),
+    ("fungo", 884, 212, True),
+    ("fungo", 934, 288, False),
 ]
 
 # ---------------------------------------------------------------------------
@@ -380,7 +398,8 @@ def luz_pintada(X, Y):
 
 
 def desenhar_ceu():
-    img = Imagem(LARGURA_CEU, ALTURA_SALA)
+    # O céu só aparece pelos buracos e janelas, lá em cima: uma tela basta.
+    img = Imagem(LARGURA_CEU, ALTURA_TELA)
     todo = img.ret(0, 0, img.w, img.h)
     # Degradê vertical: mais claro perto do horizonte (embaixo).
     v = 0.25 + 0.7 * (img.Y / 110) + 0.08 * ruido(img.w, img.h, 40, 12, 1)
@@ -436,7 +455,8 @@ def contorno_buraco(xa, xb, fundo, semente):
 
 
 def desenhar_fundo():
-    img = Imagem(LARGURA_SALA, ALTURA_SALA)
+    # A parede acaba em Y_CHAO: a imagem não precisa descer até a parte sul.
+    img = Imagem(LARGURA_SALA, ALTURA_TELA)
     X, Y = img.X, img.Y
     luz = luz_pintada(X, Y)
     parede = img.ret(0, 0, img.w, Y_CHAO)
@@ -638,8 +658,10 @@ def desenhar_porta(img, xa, xb, ya):
 
 # Onde começa cada fileira de lajotas. A distância entre as linhas cresce
 # para baixo (3, 4, 5, 6... px): é a perspectiva — o que está longe (em cima)
-# fica achatado, o que está perto (embaixo) fica maior.
-FILEIRAS = [112, 115, 119, 124, 130, 137, 145, 154, 164, 175, 188]
+# fica achatado, o que está perto (embaixo) fica maior. Na parte sul ela
+# para de crescer em 16 px, senão as lajotas da frente ficariam enormes.
+FILEIRAS = [112, 115, 119, 124, 130, 137, 145, 154, 164, 175, 188,
+            202, 217, 233, 249, 265, 281, 297, 313]
 
 
 def desenhar_chao():
@@ -665,34 +687,40 @@ def desenhar_chao():
         valor[faixa] = (0.35 + 0.18 * sorteio[coluna])[faixa]
         junta |= faixa & ((Y == ya) | ((X + desloc) % larg == 0))
     valor = valor + 0.1 * manchas + 0.05 * fino
-    valor = valor * luz - 0.2 * np.clip((122 - Y) / 10, 0, 1)
+    # Escurece no canto com a parede e, de leve, na beira da frente (a
+    # parte sul fica longe dos buracos do teto).
+    valor = valor * luz - 0.2 * np.clip((122 - Y) / 10, 0, 1)         - 0.08 * np.clip((Y - 240) / 60, 0, 1)
     img.pintar(chao, "piso", valor)
     img.pintar(chao & junta, "piso", valor - 0.22, achatar=False)
 
     # 2. Tapete podre embaixo da área das mesas de leitura.
-    tapete = img.poligono([(500, 132), (660, 132), (668, 172), (492, 172)])
+    tapete = img.poligono([(500, 132), (660, 132), (668, 172), (492, 172)])         | img.poligono([(96, 206), (246, 206), (256, 258), (86, 258)])   # parte sul
     buracos = ruido(img.w, img.h, 6, 4, 63) > 0.66
     img.pintar(tapete & ~buracos, "tapete", (0.45 + 0.25 * manchas + 0.1 * fino) * luz)
     img.pintar(tapete & ~buracos & ((X + Y) % 6 == 0), "tapete", 0.25 * luz, achatar=False)
 
     # 3. Lajotas faltando: terra aparecendo.
-    for _ in range(26):
+    for _ in range(60):
         x = rng.integers(20, 940)
-        y = rng.integers(118, 176)
+        y = rng.integers(118, ALTURA_SALA - 4)
         buraco = img.elipse(x, y, rng.uniform(4, 10), rng.uniform(2, 4)) & chao
         img.pintar(buraco, "areia", (0.2 + 0.15 * fino) * luz)
 
     # 4. Areia e terra que caíram pelo buraco grande (e um pouco pelo
     #    pequeno), em montinhos com a borda irregular.
+    #    Na parte sul, a areia cai onde o sol do buraco grande chega (o raio
+    #    anda para a direita enquanto desce).
     for (cx, cy, rx, ry) in ((250, 128, 90, 12), (300, 150, 60, 9), (660, 130, 40, 7),
-                             (190, 160, 40, 6)):
+                             (190, 160, 40, 6), (370, 238, 80, 12), (430, 272, 50, 8),
+                             (770, 250, 34, 6)):
         monte = img.elipse(cx, cy, rx, ry) & (manchas + 0.3 * fino > 0.45) & chao
         img.pintar(monte, "areia", (0.45 + 0.35 * fino) * luz)
 
     # 5. Raízes da árvore se espalhando pelo chão.
     xa, ya = 238, 138
     for (dx, dy, curva) in ((-70, 10, 6), (-40, 30, -4), (-95, -14, 4), (60, 22, -5),
-                            (95, 4, 3), (30, 36, 4), (-20, -18, 2)):
+                            (95, 4, 3), (30, 36, 4), (-20, -18, 2),
+                            (70, 110, -6), (-10, 90, 5)):   # duas raízes longas para o sul
         pontos = [(xa + dx * t + curva * np.sin(t * 6), ya + dy * t + 2 * np.sin(t * 9))
                   for t in np.linspace(0, 1, 12)]
         grossa = img.caminho(pontos[:6], 2.2) | img.caminho(pontos[5:], 1.3)
@@ -706,7 +734,8 @@ def desenhar_chao():
     x_teto = X - 0.5 * Y
     no_sol = ((x_teto > BURACO_GRANDE[0] - 10) & (x_teto < BURACO_GRANDE[1] + 10)) | \
              ((x_teto > BURACO_PEQUENO[0]) & (x_teto < BURACO_PEQUENO[1]))
-    for _ in range(420):
+    # Quantidade proporcional ao tamanho do chão (420 para os 68 px da tela).
+    for _ in range(420 * (ALTURA_SALA - Y_CHAO) // 68):
         x = int(rng.integers(0, img.w))
         y = int(rng.integers(Y_CHAO + 3, img.h))
         if not no_sol[y, x] and rng.random() > 0.08:
@@ -717,7 +746,7 @@ def desenhar_chao():
         img.pintar(img.ret(x, y - altura, x + 1, y - altura + 1), "verde", 0.85)
 
     # 7. Folhas secas espalhadas.
-    for _ in range(160):
+    for _ in range(160 * (ALTURA_SALA - Y_CHAO) // 68):
         x = int(rng.integers(0, img.w))
         y = int(rng.integers(Y_CHAO + 2, img.h))
         rampa = "areia" if rng.random() < 0.6 else "ferrugem"
@@ -726,7 +755,8 @@ def desenhar_chao():
     # 8. Musgo e fungos no chão do lado escuro.
     musgo = chao & (X > 740) & (ruido(img.w, img.h, 7, 4, 64) > 0.68)
     img.pintar(musgo, "verde", 0.15 + 0.2 * fino)
-    for (cx, cy) in ((786, 150), (884, 130), (934, 162), (822, 174)):
+    for (cx, cy) in ((786, 150), (884, 130), (934, 162), (822, 174),
+                     (700, 250), (910, 240)):
         colar_fungos(img, cx, cy, cx)
 
     # 9. Sombras de contato: embaixo de cada objeto, uma elipse escura.
@@ -1142,10 +1172,10 @@ def desenhar_frente():
         img.pintar(cipo, "verde", 0.08 + 0.12 * fino)
         folha = dilatar(cipo) & (fino > 0.7)
         img.pintar(folha, "verde", 0.12)
-    # 4. Entulho e mato no primeiro plano, lá embaixo, só em alguns pontos
-    #    (não pode esconder o Gabriel).
+    # 4. Entulho e mato no primeiro plano, na beira de baixo da sala, só em
+    #    alguns pontos (não pode esconder o Gabriel).
     for (cx, larg, alt) in ((30, 60, 9), (300, 44, 6), (520, 30, 5), (840, 70, 9)):
-        topo = 180 - alt * (1 - ((X - cx) / (larg / 2)) ** 2) - 2 * fino
+        topo = ALTURA_SALA - alt * (1 - ((X - cx) / (larg / 2)) ** 2) - 2 * fino
         monte = (np.abs(X - cx) < larg / 2) & (Y >= topo)
         img.pintar(monte, "verde", 0.05 + 0.08 * fino)
         img.cor(monte & (Y < topo + 1), RAMPAS["verde"][2])

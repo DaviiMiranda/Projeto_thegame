@@ -62,7 +62,7 @@ LARGURA_PAREDE = 80      # peças de parede: 80 px (4 por tela de 320)
 LARGURA_PILAR = 16
 LARGURA_CHAO = 128       # peças de chão: 128 px (múltiplo das lajotas de 32)
 Y_CHAO = bib.Y_CHAO      # 112: onde a parede encontra o chão
-ALTURA = bib.ALTURA_SALA  # 180
+ALTURA = bib.ALTURA_TELA  # 180 (uma tela; a Biblioteca é mais alta)
 LUZ = 0.7                # luz "neutra" pintada: o resto vem das luzes do Godot
 
 
