@@ -13,8 +13,11 @@ signal cutscene_terminou(id: String)
 @export var id: String = ""
 ## Cena que começa quando a cutscene acaba. Vazia = fica parada no fim.
 @export var proxima_cena: PackedScene
-## Se o jogador pode pular apertando Esc.
+## Se o jogador pode pular (pelo botão "Pular" no canto ou apertando Esc).
 @export var pode_pular: bool = true
+
+## O botão "Pular" é uma cena separada; toda cutscene coloca uma cópia dele.
+const CENA_BOTAO_PULAR := preload("res://cenas/cutscenes/botao_pular.tscn")
 
 @onready var animacao: AnimationPlayer = $AnimationPlayer
 
@@ -25,6 +28,11 @@ var _terminou := false
 func _ready() -> void:
 	animacao.animation_finished.connect(_ao_terminar_animacao)
 	animacao.play("principal")
+	if pode_pular:
+		var botao := CENA_BOTAO_PULAR.instantiate()
+		# Clicar no botão faz o mesmo que apertar Esc.
+		botao.pular.connect(_terminar)
+		add_child(botao)
 
 
 func _unhandled_input(event: InputEvent) -> void:
