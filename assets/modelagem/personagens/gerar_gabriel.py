@@ -1,12 +1,15 @@
 # gerar_gabriel.py — modela o Gabriel no Blender, por código, e renderiza
-# o sprite de jogo (vista lateral) e a folha de referência.
+# os sprites de jogo (frente, 3/4, lado e costas) e a folha de referência.
 #
 # Como rodar (sem abrir a janela do Blender):
 #
 #   blender -b --factory-startup --python assets/modelagem/personagens/gerar_gabriel.py
 #
 # O que sai:
-#   assets/sprites/personagens/gabriel/gabriel_lado.png        sprite de jogo, 48 px de altura
+#   assets/sprites/personagens/gabriel/gabriel_lado.png        sprites de jogo, 48 px de altura:
+#   assets/sprites/personagens/gabriel/gabriel_frente.png        de lado (olhando para a direita),
+#   assets/sprites/personagens/gabriel/gabriel_tres_quartos.png  de frente, de 3/4 (virado para a
+#   assets/sprites/personagens/gabriel/gabriel_costas.png        direita) e de costas
 #   assets/sprites/personagens/gabriel/gabriel_referencia.png  frente, 3/4, lado e costas, 128 px
 #   assets/modelagem/personagens/gabriel.blend                 o modelo, para abrir e mexer
 #
@@ -135,11 +138,17 @@ def main():
     c.criar_luzes()
     os.makedirs(PASTA_SAIDA, exist_ok=True)
 
-    # Sprite de jogo: de lado, olhando para a direita (90°).
-    sprite, indice, _ = c.renderizar_vista(cam, raiz, materiais, 90, c.QUADRO_JOGO, c.PX_POR_M_JOGO, c.PE_JOGO_PX)
-    linhas = sprite[..., 3].any(axis=1).nonzero()[0]
-    print(f"[gabriel] altura do corpo no sprite: {linhas[-1] - linhas[0] + 1} px")
-    sprite = c.contorno(sprite, indice, materiais)
+    # Sprites de jogo, um para cada direção em que ele anda (o scripts/
+    # personagens/gabriel.gd escolhe qual mostrar). O ângulo é o giro do
+    # modelo: 0 = de frente, 90 = de lado olhando para a direita, 180 = de
+    # costas. Para a esquerda, o Godot espelha o sprite.
+    jogo = {}
+    for nome, angulo in (("lado", 90), ("frente", 0), ("tres_quartos", 35), ("costas", 180)):
+        img, ind, _ = c.renderizar_vista(cam, raiz, materiais, angulo, c.QUADRO_JOGO, c.PX_POR_M_JOGO, c.PE_JOGO_PX)
+        linhas = img[..., 3].any(axis=1).nonzero()[0]
+        print(f"[gabriel] {nome}: altura do corpo no sprite: {linhas[-1] - linhas[0] + 1} px")
+        jogo[nome] = c.contorno(img, ind, materiais)
+    sprite = jogo["lado"]
 
     # Folha de referência: frente, 3/4, lado e costas, em 128 px.
     vistas = []
@@ -147,9 +156,14 @@ def main():
         img, ind, _ = c.renderizar_vista(cam, raiz, materiais, angulo, c.QUADRO_REF, c.PX_POR_M_REF, c.PE_REF_PX)
         vistas.append(c.contorno(img, ind, materiais))
 
-    # Uma paleta só para tudo do Gabriel (sprite e referência).
+    # Uma paleta só para tudo do Gabriel (sprites e referência). Ela é
+    # calculada com o sprite de lado e a referência, e as outras vistas de
+    # jogo só usam essa paleta: assim as cores de antes não mudam.
     (sprite, *vistas), paleta = c.unificar_paleta([sprite] + vistas, materiais, MAX_CORES)
     c.salvar_png(sprite, os.path.join(PASTA_SAIDA, "gabriel_lado.png"))
+    outras = ["frente", "tres_quartos", "costas"]
+    for nome, img in zip(outras, c.aplicar_paleta([jogo[n] for n in outras], paleta)):
+        c.salvar_png(img, os.path.join(PASTA_SAIDA, f"gabriel_{nome}.png"))
     c.salvar_png(c.montar_folha([vistas]), os.path.join(PASTA_SAIDA, "gabriel_referencia.png"))
     print("[gabriel] paleta:", " ".join(c.rgb_para_hex(np.array(cor) / 255) for cor in paleta))
 
