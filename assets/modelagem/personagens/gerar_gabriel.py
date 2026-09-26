@@ -9,7 +9,8 @@
 #   assets/sprites/personagens/gabriel/gabriel_lado.png        sprites de jogo, 48 px de altura:
 #   assets/sprites/personagens/gabriel/gabriel_frente.png        de lado (olhando para a direita),
 #   assets/sprites/personagens/gabriel/gabriel_tres_quartos.png  de frente, de 3/4 (virado para a
-#   assets/sprites/personagens/gabriel/gabriel_costas.png        direita) e de costas
+#   assets/sprites/personagens/gabriel/gabriel_costas.png        direita), de costas e de 3/4
+#   assets/sprites/personagens/gabriel/gabriel_tres_quartos_costas.png   de costas
 #   assets/sprites/personagens/gabriel/gabriel_andar_<vista>.png   caminhada: 12 quadros de 48 x 56
 #                                                                 lado a lado, um arquivo por vista
 #   assets/sprites/personagens/gabriel/gabriel_parado_<vista>.png  parado respirando: 8 quadros
@@ -45,7 +46,10 @@ PASTA_SAIDA = os.path.join(c.PASTA_SPRITES, "gabriel")
 ARQUIVO_BLEND = os.path.join(c.PASTA_SCRIPT, "gabriel.blend")
 MAX_CORES = 32   # tamanho máximo da paleta do Gabriel
 # Vistas dos sprites de jogo: (nome, giro do modelo em graus).
-VISTAS_JOGO = (("lado", 90), ("frente", 0), ("tres_quartos", 35), ("costas", 180))
+# 3/4 de costas (145°) é o espelho do 3/4 de frente (35°) em relação ao lado
+# (90°): 90 - 55 e 90 + 55. É a vista da diagonal para o fundo.
+VISTAS_JOGO = (("lado", 90), ("frente", 0), ("tres_quartos", 35), ("costas", 180),
+               ("tres_quartos_costas", 145))
 QUADROS_ANDAR = 12   # quadros do ciclo de caminhada (dois passos)
 QUADROS_PARADO = 8   # quadros do ciclo de respiração
 
@@ -285,7 +289,7 @@ def main():
     # jogo só usam essa paleta: assim as cores de antes não mudam.
     (sprite, *vistas), paleta = c.unificar_paleta([sprite] + vistas, materiais, MAX_CORES)
     c.salvar_png(sprite, os.path.join(PASTA_SAIDA, "gabriel_lado.png"))
-    outras = ["frente", "tres_quartos", "costas"]
+    outras = ["frente", "tres_quartos", "costas", "tres_quartos_costas"]
     for nome, img in zip(outras, c.aplicar_paleta([jogo[n] for n in outras], paleta)):
         c.salvar_png(img, os.path.join(PASTA_SAIDA, f"gabriel_{nome}.png"))
     for nome, quadros in andar.items():
