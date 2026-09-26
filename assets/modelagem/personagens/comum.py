@@ -529,7 +529,13 @@ def unificar_paleta(imagens, materiais, max_cores):
             break
         limite += 0.5
     print(f"[paleta] {len(contagem)} cores -> {len(paleta)} (juntando cores a menos de {limite:.1f} no Lab)")
-    # Cada pixel vai para a cor mais próxima da paleta final.
+    return aplicar_paleta(imagens, paleta), paleta
+
+
+def aplicar_paleta(imagens, paleta):
+    """Leva cada pixel das imagens para a cor mais próxima (no Lab) de uma
+    paleta que já existe. Serve para desenhar um sprite novo com a mesma
+    paleta dos antigos, sem mudar as cores deles."""
     pal = np.array(paleta, dtype=np.float64) / 255
     pal_lab = srgb_para_lab(pal)
     saida = []
@@ -540,7 +546,7 @@ def unificar_paleta(imagens, materiais, max_cores):
         dist = ((px_lab[:, None, :] - pal_lab[None, :, :]) ** 2).sum(axis=2)
         novo[opaco, :3] = pal[dist.argmin(axis=1)]
         saida.append(novo)
-    return saida, paleta
+    return saida
 
 
 def paleta_usada(*imagens):
