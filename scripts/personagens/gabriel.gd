@@ -20,7 +20,12 @@ extends CharacterBody2D
 ## Versão mínima para a primeira sala ficar jogável. Estamina, ruído dos
 ## passos e esconderijos ficam para o papel 2 (docs/mecanicas/).
 ## As teclas estão em Projeto > Configurações do Projeto > Mapa de Entrada:
-## mover_esquerda, mover_direita, mover_cima, mover_baixo, correr e agachar.
+## mover_esquerda, mover_direita, mover_cima, mover_baixo, correr, agachar,
+## interagir (E) e gadget_1, gadget_2, gadget_3 (teclas 1, 2 e 3).
+##
+## Itens: o que ele carrega fica no Inventario (scripts/sistemas/inventario.gd).
+## Para cada gadget equipado, o Gabriel cria a cena do efeito dele (ex.: a
+## luz do pote de fungos) dentro do nó "Gadgets", na altura da mão.
 
 ## Velocidade andando para os lados, em pixels por segundo.
 @export var velocidade_andar: float = 45.0
@@ -88,12 +93,62 @@ var _distancia := 0.0
 var _tempo_parado := 0.0
 
 @onready var sprite: Sprite2D = $Sprite2D
+@onready var no_gadgets: Node2D = $Gadgets
 
 
 func _ready() -> void:
 	# Modo "flutuante": o CharacterBody2D não tem chão nem teto, todas as
 	# direções são iguais. É o modo certo para jogos vistos de cima/2.5D.
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
+	# O grupo "jogador" é como o HUD e os interagíveis acham o Gabriel.
+	add_to_group("jogador")
+	Inventario.mudou.connect(_atualizar_gadgets)
+	_atualizar_gadgets()
+
+
+func _unhandled_input(evento: InputEvent) -> void:
+	if evento.is_action_pressed("interagir"):
+		var alvo := Interagivel.mais_perto(get_tree(), global_position)
+		if alvo:
+			alvo.interagir()
+	for i in Inventario.ESPACOS_GADGET:
+		if evento.is_action_pressed("gadget_%d" % (i + 1)):
+			usar_gadget(i)
+
+
+## Usa o gadget do espaço (0, 1 ou 2): chama usar() na cena do efeito dele.
+func usar_gadget(espaco: int) -> void:
+	var item: Item = Inventario.gadgets[espaco]
+	if item == null:
+		return
+	var efeito := no_gadgets.get_node_or_null(NodePath(item.id))
+	if efeito and efeito.has_method("usar"):
+		efeito.usar()
+
+
+## Deixa o nó "Gadgets" com exatamente uma cena de efeito para cada gadget
+## equipado: cria a dos que entraram e apaga a dos que saíram. Cada cena
+## tem o nome do id do item (ex.: "pote_fungos"), para ser achada depois.
+func _atualizar_gadgets() -> void:
+	var equipados := {}
+	for item in Inventario.gadgets:
+		if item != null and item.cena_gadget:
+			equipados[item.id] = item
+	for efeito in no_gadgets.get_children():
+		if not equipados.has(String(efeito.name)):
+			if efeito.has_method("ao_desequipar"):
+				efeito.ao_desequipar()
+			# Tira da árvore já (queue_free só apaga no fim do quadro), para
+			# o nome ficar livre se o item for equipado de novo agora.
+			no_gadgets.remove_child(efeito)
+			efeito.queue_free()
+	for id in equipados:
+		if no_gadgets.has_node(NodePath(id)):
+			continue
+		var efeito := (equipados[id] as Item).cena_gadget.instantiate()
+		efeito.name = id
+		efeito.set("item", equipados[id])
+		no_gadgets.add_child(efeito)
 
 
 func _physics_process(delta: float) -> void:
