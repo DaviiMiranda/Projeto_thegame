@@ -22,6 +22,11 @@
 [ext_resource type="PackedScene" path="res://cenas/cenario/objetos/livros.tscn" id="o_livros"]
 [ext_resource type="PackedScene" path="res://cenas/cenario/objetos/mesa_leitura.tscn" id="o_mesa_leitura"]
 [ext_resource type="Script" path="res://scripts/salas/guias_sala.gd" id="6_guias"]
+[ext_resource type="PackedScene" path="res://cenas/interface/hud.tscn" id="i_hud"]
+[ext_resource type="PackedScene" path="res://cenas/interface/tela_inventario.tscn" id="i_inventario"]
+[ext_resource type="PackedScene" path="res://cenas/itens/item_no_chao.tscn" id="i_item"]
+[ext_resource type="Resource" path="res://dados/itens/pote_fungos.tres" id="i_pote"]
+[ext_resource type="PackedScene" path="res://cenas/cenario/luzes/luz_fungo.tscn" id="i_luz_fungo"]
 
 [sub_resource type="ShaderMaterial" id="Raios_grande"]
 shader = ExtResource("3_raios")
@@ -143,6 +148,15 @@ espelhado = true
 
 [node name="Fungo3" parent="Objetos" instance=ExtResource("o_fungo")]
 position = Vector2(912, 124)
+
+[node name="PoteFungos" parent="Objetos" instance=ExtResource("i_item")]
+position = Vector2(192, 160)
+item = ExtResource("i_pote")
+
+[node name="Luz" parent="Objetos/PoteFungos" instance=ExtResource("i_luz_fungo")]
+position = Vector2(0, -4)
+scale = Vector2(1.2, 1.2)
+energy = 0.7
 
 [node name="MesaLeituraSul" parent="Objetos" instance=ExtResource("o_mesa_leitura")]
 position = Vector2(170, 232)
@@ -403,6 +417,10 @@ offset_right = 320.0
 offset_bottom = 180.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="Hud" parent="." instance=ExtResource("i_hud")]
+
+[node name="TelaInventario" parent="." instance=ExtResource("i_inventario")]
 
 [node name="Guias" type="Node2D" parent="."]
 script = ExtResource("6_guias")

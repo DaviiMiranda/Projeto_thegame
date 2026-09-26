@@ -1,0 +1,124 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/interface/tela_inventario.gd" id="1_tela"]
+[ext_resource type="Texture2D" path="res://assets/sprites/interface/painel.png" id="2_painel"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_titulo"]
+font_size = 10
+font_color = Color(0.95, 0.88, 0.7, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_nome"]
+font_size = 10
+font_color = Color(0.64, 0.9, 0.85, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_texto"]
+font_size = 8
+font_color = Color(0.82, 0.8, 0.72, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_situacao"]
+font_size = 8
+font_color = Color(0.64, 0.9, 0.85, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dica"]
+font_size = 8
+font_color = Color(0.55, 0.56, 0.52, 1)
+
+[node name="TelaInventario" type="CanvasLayer"]
+process_mode = 3
+layer = 8
+visible = false
+script = ExtResource("1_tela")
+
+[node name="Fundo" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Janela" type="NinePatchRect" parent="."]
+offset_left = 36.0
+offset_top = 18.0
+offset_right = 284.0
+offset_bottom = 162.0
+texture = ExtResource("2_painel")
+patch_margin_left = 6
+patch_margin_top = 6
+patch_margin_right = 6
+patch_margin_bottom = 6
+
+[node name="Titulo" type="Label" parent="Janela"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 5.0
+offset_right = 120.0
+offset_bottom = 19.0
+text = "INVENTÁRIO"
+label_settings = SubResource("LabelSettings_titulo")
+
+[node name="Grade" type="GridContainer" parent="Janela"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 22.0
+offset_right = 96.0
+offset_bottom = 86.0
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 4
+
+[node name="TituloGadgets" type="Label" parent="Janela"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 92.0
+offset_right = 96.0
+offset_bottom = 103.0
+text = "GADGETS"
+label_settings = SubResource("LabelSettings_titulo")
+
+[node name="Gadgets" type="HBoxContainer" parent="Janela"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 106.0
+offset_right = 74.0
+offset_bottom = 126.0
+theme_override_constants/separation = 2
+
+[node name="Nome" type="Label" parent="Janela"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 22.0
+offset_right = 238.0
+offset_bottom = 36.0
+label_settings = SubResource("LabelSettings_nome")
+
+[node name="Descricao" type="Label" parent="Janela"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 36.0
+offset_right = 238.0
+offset_bottom = 112.0
+label_settings = SubResource("LabelSettings_texto")
+autowrap_mode = 3
+max_lines_visible = 6
+
+[node name="Situacao" type="Label" parent="Janela"]
+layout_mode = 0
+offset_left = 108.0
+offset_top = 114.0
+offset_right = 238.0
+offset_bottom = 126.0
+label_settings = SubResource("LabelSettings_situacao")
+
+[node name="Dica" type="Label" parent="Janela"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 130.0
+offset_right = 238.0
+offset_bottom = 140.0
+text = "Setas: escolher     1 2 3: equipar     Tab: fechar"
+label_settings = SubResource("LabelSettings_dica")
