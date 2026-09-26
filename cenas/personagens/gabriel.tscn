@@ -5,6 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://dalgjayecjuws" path="res://assets/sprites/personagens/gabriel/gabriel_frente.png" id="3_frente"]
 [ext_resource type="Texture2D" uid="uid://cibhrwpnun6yk" path="res://assets/sprites/personagens/gabriel/gabriel_tres_quartos.png" id="4_tres_quartos"]
 [ext_resource type="Texture2D" uid="uid://dso2bjj18huw" path="res://assets/sprites/personagens/gabriel/gabriel_costas.png" id="5_costas"]
+[ext_resource type="Texture2D" uid="uid://c5pjxkes74vui" path="res://assets/sprites/personagens/gabriel/gabriel_andar_lado.png" id="6_andar_lado"]
+[ext_resource type="Texture2D" uid="uid://bfnasxidop1h3" path="res://assets/sprites/personagens/gabriel/gabriel_andar_frente.png" id="7_andar_frente"]
+[ext_resource type="Texture2D" uid="uid://cd2soanlsrjhh" path="res://assets/sprites/personagens/gabriel/gabriel_andar_tres_quartos.png" id="8_andar_tres_quartos"]
+[ext_resource type="Texture2D" uid="uid://bih57v0igrnp5" path="res://assets/sprites/personagens/gabriel/gabriel_andar_costas.png" id="9_andar_costas"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pes"]
 size = Vector2(12, 4)
@@ -16,6 +20,10 @@ sprite_lado = ExtResource("2_sprite")
 sprite_frente = ExtResource("3_frente")
 sprite_tres_quartos = ExtResource("4_tres_quartos")
 sprite_costas = ExtResource("5_costas")
+andar_lado = ExtResource("6_andar_lado")
+andar_frente = ExtResource("7_andar_frente")
+andar_tres_quartos = ExtResource("8_andar_tres_quartos")
+andar_costas = ExtResource("9_andar_costas")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_sprite")

@@ -42,11 +42,30 @@ extends CharacterBody2D
 @export var sprite_tres_quartos: Texture2D
 @export var sprite_costas: Texture2D
 
+@export_group("Caminhada")
+## Tiras com os quadros da caminhada, lado a lado, uma para cada vista.
+@export var andar_lado: Texture2D
+@export var andar_frente: Texture2D
+@export var andar_tres_quartos: Texture2D
+@export var andar_costas: Texture2D
+## Quantos quadros cada tira tem.
+@export var quadros_andar: int = 6
+## Quantos pixels ele anda a cada quadro da caminhada. O quadro avança pela
+## DISTÂNCIA andada, e não pelo tempo: correndo, a animação acelera sozinha;
+## agachado, fica mais lenta; batendo numa estante, para. Com ~5,5 px o pé
+## acompanha o chão sem "patinar" (um ciclo de dois passos tem ~34 px).
+@export var px_por_quadro: float = 5.5
+
 ## Verdadeiro enquanto o jogador segura a tecla de agachar.
 var agachado := false
 ## Verdadeiro enquanto ele está correndo (e se mexendo). O papel 2 vai usar
 ## isso para a estamina e o barulho dos passos.
 var correndo := false
+
+## Para qual lado ele está virado: "lado", "frente", "tres_quartos" ou "costas".
+var vista := "lado"
+## Distância andada desde que começou a andar (escolhe o quadro).
+var _distancia := 0.0
 
 @onready var sprite: Sprite2D = $Sprite2D
 
@@ -57,7 +76,7 @@ func _ready() -> void:
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# get_vector junta as 4 teclas num vetor (x, y), cada eixo de -1 a 1.
 	# Na diagonal ele daria (1, 1), de comprimento √2 ≈ 1,41: andaria 41%
 	# mais rápido. get_vector já corrige isso, "normalizando": se o
@@ -80,7 +99,10 @@ func _physics_process(_delta: float) -> void:
 	# em vez de parar seco (é o que deixa ele "raspar" na estante).
 	move_and_slide()
 
-	_virar_sprite(direcao)
+	_virar(direcao)
+	# get_real_velocity é quanto ele REALMENTE andou: se esbarrou numa
+	# estante, é menos do que o jogador pediu, e as pernas param junto.
+	_animar(get_real_velocity().length() * delta)
 
 	# Provisório até existir o sprite agachado: achata o desenho.
 	sprite.scale.y = 0.75 if agachado else 1.0
@@ -91,19 +113,39 @@ func _physics_process(_delta: float) -> void:
 ##   para os lados     -> de lado       diagonal para a frente -> 3/4
 ## Na diagonal para o fundo ele fica de lado (não temos 3/4 de costas).
 ## Parado, ele continua virado para onde estava.
-func _virar_sprite(direcao: Vector2) -> void:
+func _virar(direcao: Vector2) -> void:
 	if direcao == Vector2.ZERO:
 		return
-	var textura: Texture2D
 	if direcao.x == 0.0:
-		textura = sprite_frente if direcao.y > 0.0 else sprite_costas
+		vista = "frente" if direcao.y > 0.0 else "costas"
 	elif direcao.y > 0.0:
-		textura = sprite_tres_quartos
+		vista = "tres_quartos"
 	else:
-		textura = sprite_lado
-	if textura:
-		sprite.texture = textura
+		vista = "lado"
 	# Lado e 3/4 olham para a direita; espelha quando anda para a esquerda.
 	# Andando só para a frente/fundo, fica espelhado como estava.
 	if direcao.x != 0.0:
 		sprite.flip_h = direcao.x < 0.0
+
+
+## Andando: mostra a tira da caminhada da vista atual, no quadro que
+## corresponde à distância andada. Parado: volta para o sprite parado.
+func _animar(andou: float) -> void:
+	var parado := {"lado": sprite_lado, "frente": sprite_frente,
+			"tres_quartos": sprite_tres_quartos, "costas": sprite_costas}
+	var andando := {"lado": andar_lado, "frente": andar_frente,
+			"tres_quartos": andar_tres_quartos, "costas": andar_costas}
+	var tira: Texture2D = andando[vista]
+	if andou > 0.01 and tira:
+		_distancia += andou
+		sprite.texture = tira
+		sprite.hframes = quadros_andar
+		# O resto da divisão (%) faz a conta voltar ao quadro 0 depois do
+		# último: o ciclo se repete enquanto ele anda.
+		sprite.frame = int(_distancia / px_por_quadro) % quadros_andar
+	else:
+		_distancia = 0.0
+		sprite.hframes = 1
+		sprite.frame = 0
+		if parado[vista]:
+			sprite.texture = parado[vista]

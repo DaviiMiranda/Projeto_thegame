@@ -10,6 +10,8 @@
 #   assets/sprites/personagens/gabriel/gabriel_frente.png        de lado (olhando para a direita),
 #   assets/sprites/personagens/gabriel/gabriel_tres_quartos.png  de frente, de 3/4 (virado para a
 #   assets/sprites/personagens/gabriel/gabriel_costas.png        direita) e de costas
+#   assets/sprites/personagens/gabriel/gabriel_andar_<vista>.png  caminhada: 6 quadros de 48 x 56
+#                                                                lado a lado, um arquivo por vista
 #   assets/sprites/personagens/gabriel/gabriel_referencia.png  frente, 3/4, lado e costas, 128 px
 #   assets/modelagem/personagens/gabriel.blend                 o modelo, para abrir e mexer
 #
@@ -28,6 +30,7 @@
 # o que importa é a SILHUETA: cabelo arrepiado, capuz nas costas e a
 # mochila, que deixa o perfil do Gabriel inconfundível.
 
+import math
 import os
 import sys
 
@@ -35,10 +38,14 @@ sys.dont_write_bytecode = True   # não criar a pasta __pycache__ ao importar o 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import comum as c  # noqa: E402  (precisa vir depois do sys.path)
 import numpy as np  # noqa: E402
+import bpy  # noqa: E402
 
 PASTA_SAIDA = os.path.join(c.PASTA_SPRITES, "gabriel")
 ARQUIVO_BLEND = os.path.join(c.PASTA_SCRIPT, "gabriel.blend")
 MAX_CORES = 32   # tamanho máximo da paleta do Gabriel
+# Vistas dos sprites de jogo: (nome, giro do modelo em graus).
+VISTAS_JOGO = (("lado", 90), ("frente", 0), ("tres_quartos", 35), ("costas", 180))
+QUADROS_ANDAR = 6   # quadros do ciclo de caminhada (dois passos)
 
 
 def criar_materiais():
@@ -129,6 +136,69 @@ def montar(mt):
     return raiz
 
 
+# ---------------------------------------------------------------------------
+# Caminhada
+# ---------------------------------------------------------------------------
+#
+# Um ciclo de caminhada são DOIS passos: a perna direita vai à frente, depois
+# a esquerda. Chamamos de fase (φ) o ponto do ciclo, de 0 a 360 graus, e
+# cada junta segue uma onda seno dessa fase:
+#
+#   coxa   = -AMPLITUDE_COXA · sen(φ)     a perna balança para a frente e
+#                                        para trás (ângulo negativo = frente);
+#                                        a outra perna usa φ + 180°, o oposto
+#   joelho = dobra só enquanto a perna vem para a frente no ar, que é
+#            quando cos(φ) > 0 (a coxa está indo para a frente)
+#   ombro  = o braço balança ao contrário da perna do mesmo lado
+#   quadril desce um pouco quando as pernas estão abertas (sen² φ = 1):
+#            é o "sobe e desce" que dá peso ao andar
+#
+# Com 6 quadros, cada quadro avança 60° na fase.
+
+AMPLITUDE_COXA = 22       # graus
+AMPLITUDE_JOELHO = 55   # bem dobrado: de frente e de costas, é o pé subindo que mostra o passo
+AMPLITUDE_BRACO = 16
+DESCIDA_QUADRIL = 0.037   # metros: 1 px no sprite de jogo
+
+
+def guardar_pose():
+    """Guarda a rotação e a posição de todas as juntas, para voltar à pose
+    parada depois de renderizar a caminhada."""
+    return {o.name: (tuple(o.rotation_euler), tuple(o.location))
+            for o in bpy.data.objects if o.type == 'EMPTY'}
+
+
+def restaurar_pose(pose):
+    for nome, (rot, pos) in pose.items():
+        obj = bpy.data.objects[nome]
+        obj.rotation_euler = rot
+        obj.location = pos
+
+
+def pose_andar(parado, fase):
+    """Coloca o Gabriel na pose da caminhada para a fase dada (em graus).
+    Os ângulos somam por cima da pose parada (que já tem o cansaço dele)."""
+    def girar(nome, graus_x):
+        rot, _ = parado[nome]
+        bpy.data.objects[nome].rotation_euler = (rot[0] + math.radians(graus_x), rot[1], rot[2])
+
+    for perna, desloc in (("PernaDir", 0), ("PernaEsq", 180)):
+        phi = math.radians(fase + desloc)
+        coxa = -AMPLITUDE_COXA * math.sin(phi)
+        joelho = AMPLITUDE_JOELHO * max(0.0, math.cos(phi)) ** 1.5
+        girar(f"{perna}Quadril", coxa)
+        girar(f"{perna}Joelho", joelho)
+        # O tornozelo desfaz o giro da coxa e do joelho: o tênis fica reto.
+        girar(f"{perna}Tornozelo", -coxa - joelho)
+    for braco, desloc in (("BracoDir", 0), ("BracoEsq", 180)):
+        phi = math.radians(fase + desloc)
+        girar(f"{braco}Ombro", AMPLITUDE_BRACO * math.sin(phi))
+        girar(f"{braco}Cotovelo", -10 * max(0.0, -math.sin(phi)))
+    _, pos = parado["Quadril"]
+    subida = DESCIDA_QUADRIL * math.sin(math.radians(fase)) ** 2
+    bpy.data.objects["Quadril"].location = (pos[0], pos[1], pos[2] - subida)
+
+
 def main():
     c.cena_vazia()
     materiais, mt = criar_materiais()
@@ -143,12 +213,23 @@ def main():
     # modelo: 0 = de frente, 90 = de lado olhando para a direita, 180 = de
     # costas. Para a esquerda, o Godot espelha o sprite.
     jogo = {}
-    for nome, angulo in (("lado", 90), ("frente", 0), ("tres_quartos", 35), ("costas", 180)):
+    for nome, angulo in VISTAS_JOGO:
         img, ind, _ = c.renderizar_vista(cam, raiz, materiais, angulo, c.QUADRO_JOGO, c.PX_POR_M_JOGO, c.PE_JOGO_PX)
         linhas = img[..., 3].any(axis=1).nonzero()[0]
         print(f"[gabriel] {nome}: altura do corpo no sprite: {linhas[-1] - linhas[0] + 1} px")
         jogo[nome] = c.contorno(img, ind, materiais)
     sprite = jogo["lado"]
+
+    # Caminhada: QUADROS_ANDAR poses em cada vista, lado a lado numa tira.
+    parado = guardar_pose()
+    andar = {nome: [] for nome, _ in VISTAS_JOGO}
+    for q in range(QUADROS_ANDAR):
+        pose_andar(parado, 360 * q / QUADROS_ANDAR)
+        for nome, angulo in VISTAS_JOGO:
+            img, ind, _ = c.renderizar_vista(cam, raiz, materiais, angulo, c.QUADRO_JOGO, c.PX_POR_M_JOGO, c.PE_JOGO_PX)
+            andar[nome].append(c.contorno(img, ind, materiais))
+        print(f"[gabriel] andar: quadro {q + 1}/{QUADROS_ANDAR}")
+    restaurar_pose(parado)
 
     # Folha de referência: frente, 3/4, lado e costas, em 128 px.
     vistas = []
@@ -164,6 +245,9 @@ def main():
     outras = ["frente", "tres_quartos", "costas"]
     for nome, img in zip(outras, c.aplicar_paleta([jogo[n] for n in outras], paleta)):
         c.salvar_png(img, os.path.join(PASTA_SAIDA, f"gabriel_{nome}.png"))
+    for nome, quadros in andar.items():
+        tira = np.concatenate(c.aplicar_paleta(quadros, paleta), axis=1)
+        c.salvar_png(tira, os.path.join(PASTA_SAIDA, f"gabriel_andar_{nome}.png"))
     c.salvar_png(c.montar_folha([vistas]), os.path.join(PASTA_SAIDA, "gabriel_referencia.png"))
     print("[gabriel] paleta:", " ".join(c.rgb_para_hex(np.array(cor) / 255) for cor in paleta))
 
